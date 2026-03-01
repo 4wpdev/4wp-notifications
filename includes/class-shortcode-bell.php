@@ -80,9 +80,21 @@ class ForWP_Notifications_Shortcode_Bell {
 		$icon_url = apply_filters( 'forwp_notifications_bell_icon_url', '' );
 		$icon_html = $this->get_icon_html( $icon_url );
 
+		$i18n = array(
+			'empty'        => __( 'No new notifications', 'forwp-notifications' ),
+			'markRead'     => __( 'Mark as read', 'forwp-notifications' ),
+			'markUnread'   => __( 'Mark as unread', 'forwp-notifications' ),
+			'notification' => __( 'Notification', 'forwp-notifications' ),
+			'goToPage'     => __( 'Go to page', 'forwp-notifications' ),
+			'justNow'      => __( 'just now', 'forwp-notifications' ),
+			'minAgo'       => __( 'min ago', 'forwp-notifications' ),
+			'hrAgo'        => __( 'hr ago', 'forwp-notifications' ),
+			'dAgo'         => __( 'd ago', 'forwp-notifications' ),
+		);
+		wp_localize_script( 'forwp-notifications-bell-widget', 'forwpNotificationsBellI18n', $i18n );
 		ob_start();
 		?>
-		<div class="forwp-notifications-bell" data-forwp-bell="1" data-forwp-rest-url="<?php echo esc_url( $rest_url ); ?>" data-forwp-nonce="<?php echo esc_attr( $nonce ); ?>">
+		<div class="forwp-notifications-bell" data-forwp-bell="1" data-forwp-rest-url="<?php echo esc_url( $rest_url ); ?>" data-forwp-nonce="<?php echo esc_attr( $nonce ); ?>" data-forwp-i18n="<?php echo esc_attr( wp_json_encode( $i18n ) ); ?>">
 			<button type="button" class="forwp-notifications-bell__button" aria-label="<?php esc_attr_e( 'Notifications', 'forwp-notifications' ); ?>" aria-expanded="false" aria-haspopup="true">
 				<?php echo $icon_html; ?>
 				<span class="forwp-notifications-bell__badge" <?php echo $unread > 0 ? '' : 'style="display: none;"'; ?>><?php echo $unread > 99 ? '99+' : (int) $unread; ?></span>

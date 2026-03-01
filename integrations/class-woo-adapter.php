@@ -79,22 +79,18 @@ class ForWP_Notifications_Woo_Adapter {
 			return;
 		}
 		$view_url = $order->get_view_order_url();
-		$titles   = array(
-			'processing' => __( 'Order is being processed', 'forwp-notifications' ),
-			'completed'  => __( 'Order completed', 'forwp-notifications' ),
-			'on-hold'    => __( 'Order on hold', 'forwp-notifications' ),
-			'cancelled'  => __( 'Order cancelled', 'forwp-notifications' ),
-			'refunded'   => __( 'Order refunded', 'forwp-notifications' ),
-			'failed'     => __( 'Order failed', 'forwp-notifications' ),
-		);
-		$title = isset( $titles[ $to ] ) ? $titles[ $to ] : sprintf( __( 'Order #%d status: %s', 'forwp-notifications' ), $order_id, $to );
+		$status_label = function_exists( 'wc_get_order_status_name' ) ? wc_get_order_status_name( 'wc-' . $to ) : $to;
+		if ( empty( $status_label ) || $status_label === 'wc-' . $to ) {
+			$status_label = $to;
+		}
+		$title = sprintf( __( 'Order #%1$d: %2$s', 'forwp-notifications' ), $order_id, $status_label );
 		ForWP_Notifications_Queue::push(
 			$user_id,
 			'order_status_changed',
 			'woo',
 			array(
 				'title'   => $title,
-				'message' => sprintf( __( 'Order #%d is now %s.', 'forwp-notifications' ), $order_id, $to ),
+				'message' => '',
 				'url'     => $view_url,
 				'actions' => array(
 					array( 'type' => 'view', 'label' => __( 'View order', 'forwp-notifications' ), 'url' => $view_url ),

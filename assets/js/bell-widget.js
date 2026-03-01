@@ -1,6 +1,15 @@
 (function () {
 	'use strict';
 
+	var globalI18n = window.forwpNotificationsBellI18n || {};
+	function getI18n(wrapper) {
+		if (!wrapper) return globalI18n;
+		var raw = wrapper.getAttribute('data-forwp-i18n');
+		if (!raw) return globalI18n;
+		try {
+			return Object.assign({}, globalI18n, JSON.parse(raw));
+		} catch (e) { return globalI18n; }
+	}
 	var LIST_SEL = '.forwp-notifications-bell__list';
 	var LIST_EMPTY_SEL = '.forwp-notifications-bell__list-empty';
 	var ITEM_SEL = '.forwp-notifications-bell__item';
@@ -9,7 +18,6 @@
 	var BADGE_SEL = '.forwp-notifications-bell__badge';
 	var MARK_ALL_SEL = '.forwp-notifications-bell__mark-all';
 	var DROPDOWN_ACTIVE_CLASS = 'forwp-notifications-bell__dropdown--active';
-	// How often to refresh the unread badge (polling, not real-time).
 	var POLL_INTERVAL_MS = 30000;
 
 	function bindDropdownToggle(wrapper) {
@@ -49,23 +57,22 @@
 		return div.innerHTML;
 	}
 
-	function formatTimeAgo(createdAt) {
+	function formatTimeAgo(createdAt, i18n) {
+		i18n = i18n || globalI18n;
 		if (!createdAt) return '';
 		try {
 			var d = new Date(createdAt.replace(/\s/, 'T'));
 			if (isNaN(d.getTime())) return createdAt;
 			var now = new Date();
 			var s = Math.floor((now - d) / 1000);
-			if (s < 60) return 'just now';
-			if (s < 3600) return Math.floor(s / 60) + ' min ago';
-			if (s < 86400) return Math.floor(s / 3600) + ' hr ago';
-			return Math.floor(s / 86400) + ' d ago';
+			if (s < 60) return i18n.justNow || 'just now';
+			if (s < 3600) return Math.floor(s / 60) + ' ' + (i18n.minAgo || 'min ago');
+			if (s < 86400) return Math.floor(s / 3600) + ' ' + (i18n.hrAgo || 'hr ago');
+			return Math.floor(s / 86400) + ' ' + (i18n.dAgo || 'd ago');
 		} catch (e) { return createdAt; }
 	}
 
 	var TOGGLE_SEL = '.forwp-notifications-bell__item-toggle';
-	var LABEL_READ = 'Mark as read';
-	var LABEL_UNREAD = 'Mark as unread';
 
 	function getItemIconClass(source) {
 		if (source === 'woo') return 'dashicons-cart';
@@ -73,25 +80,28 @@
 		return 'dashicons-bell';
 	}
 
-	function renderItem(item) {
+	function renderItem(item, i18n) {
+		i18n = i18n || globalI18n;
 		var payload = item.payload || {};
 		var source = item.source || '';
-		var title = payload.title || 'Notification';
+		var defaultTitle = i18n.notification || 'Notification';
+		var title = payload.title || defaultTitle;
 		var message = payload.message || '';
 		var url = payload.url || '#';
 		var isRead = item.is_read === 1 || item.is_read === '1';
-		var timeAgo = formatTimeAgo(item.created_at);
+		var timeAgo = formatTimeAgo(item.created_at, i18n);
 		var unreadClass = isRead ? '' : ' ' + ITEM_UNREAD_CLASS;
 		var itemClass = ITEM_CLASS + unreadClass;
 		var msgHtml = message ? '<p class="forwp-notifications-bell__item-text">' + escapeHtml(message) + '</p>' : '';
 		var timeHtml = timeAgo ? '<time class="forwp-notifications-bell__item-time">' + escapeHtml(timeAgo) + '</time>' : '';
-		var toggleLabel = isRead ? LABEL_UNREAD : LABEL_READ;
+		var toggleLabel = isRead ? (i18n.markUnread || 'Mark as unread') : (i18n.markRead || 'Mark as read');
 		var toggleIcon = isRead ? 'dashicons-hidden' : 'dashicons-visibility';
 		var toggleReadClass = isRead ? ' forwp-notifications-bell__item-toggle--read' : '';
 		var toggleBtn = '<button type="button" class="forwp-notifications-bell__item-toggle' + toggleReadClass + '" data-id="' + item.id + '" data-is-read="' + (isRead ? '1' : '0') + '" aria-label="' + escapeHtml(toggleLabel) + '"><span class="dashicons ' + toggleIcon + '" aria-hidden="true"></span></button>';
 		var iconClass = getItemIconClass(source);
 		var hasLink = url && url !== '#';
-		var linkIconHtml = hasLink ? '<span class="forwp-notifications-bell__item-link-icon" aria-label="Go to page"><span class="dashicons dashicons-external"></span></span>' : '';
+		var goToPageLabel = i18n.goToPage || 'Go to page';
+		var linkIconHtml = hasLink ? '<span class="forwp-notifications-bell__item-link-icon" aria-label="' + escapeHtml(goToPageLabel) + '"><span class="dashicons dashicons-external"></span></span>' : '';
 		return (
 			'<a href="' + escapeHtml(url) + '" class="' + itemClass + '" data-id="' + item.id + '">' +
 			'<span class="forwp-notifications-bell__item-icon"><span class="dashicons ' + iconClass + '" style="font-size:20px;width:20px;height:20px;" aria-hidden="true"></span></span>' +
@@ -101,11 +111,11 @@
 		);
 	}
 
-	function renderList(items) {
+	function renderList(items, i18n) {
 		if (!items || !items.length) return '';
 		var html = '';
 		for (var i = 0; i < items.length; i++) {
-			html += renderItem(items[i]);
+			html += renderItem(items[i], i18n);
 		}
 		return html;
 	}
@@ -123,18 +133,24 @@
 		}
 	}
 
-	var EMPTY_HTML = '<div class="forwp-notifications-bell__list-empty"><p>No new notifications</p></div>';
+	function getEmptyHtml(wrapper, i18n) {
+		i18n = i18n || (wrapper ? getI18n(wrapper) : globalI18n);
+		var text = i18n.empty || 'No new notifications';
+		return '<div class="forwp-notifications-bell__list-empty"><p>' + escapeHtml(text) + '</p></div>';
+	}
 
 	function setListAndEmpty(wrapper, items) {
 		var listEl = wrapper.querySelector(LIST_SEL);
 		if (!listEl) return;
-		var listHtml = renderList(items);
+		var i18n = getI18n(wrapper);
+		var listHtml = renderList(items, i18n);
+		var emptyHtml = getEmptyHtml(wrapper, i18n);
 		if (listHtml) {
-			listEl.innerHTML = listHtml + EMPTY_HTML;
+			listEl.innerHTML = listHtml + emptyHtml;
 			var emptyEl = listEl.querySelector(LIST_EMPTY_SEL);
 			if (emptyEl) emptyEl.style.display = 'none';
 		} else {
-			listEl.innerHTML = EMPTY_HTML;
+			listEl.innerHTML = emptyHtml;
 		}
 	}
 
@@ -180,6 +196,7 @@
 	function bindItemToggles(wrapper, restUrl, nonce) {
 		var listEl = wrapper.querySelector(LIST_SEL);
 		if (!listEl) return;
+		var i18n = getI18n(wrapper);
 		listEl.querySelectorAll(TOGGLE_SEL).forEach(function (btn) {
 			btn.addEventListener('click', function (e) {
 				e.preventDefault();
@@ -200,7 +217,7 @@
 						if (nextRead) {
 							itemRow.classList.remove(ITEM_UNREAD_CLASS);
 							self.setAttribute('data-is-read', '1');
-							self.setAttribute('aria-label', LABEL_UNREAD);
+							self.setAttribute('aria-label', i18n.markUnread || 'Mark as unread');
 							self.classList.add('forwp-notifications-bell__item-toggle--read');
 							var icon = self.querySelector('.dashicons');
 							if (icon) { icon.className = 'dashicons dashicons-hidden'; }
@@ -209,7 +226,7 @@
 						} else {
 							itemRow.classList.add(ITEM_UNREAD_CLASS);
 							self.setAttribute('data-is-read', '0');
-							self.setAttribute('aria-label', LABEL_READ);
+							self.setAttribute('aria-label', i18n.markRead || 'Mark as read');
 							self.classList.remove('forwp-notifications-bell__item-toggle--read');
 							var icon = self.querySelector('.dashicons');
 							if (icon) { icon.className = 'dashicons dashicons-visibility'; }

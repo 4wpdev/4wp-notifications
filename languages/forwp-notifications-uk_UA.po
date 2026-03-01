@@ -112,6 +112,18 @@ msgstr "Повідомлення"
 msgid "ago"
 msgstr "тому"
 
+msgid "just now"
+msgstr "щойно"
+
+msgid "min ago"
+msgstr "хв тому"
+
+msgid "hr ago"
+msgstr "год тому"
+
+msgid "d ago"
+msgstr "дн тому"
+
 # rest/class-rest-controller.php
 msgid "Notification not found."
 msgstr "Повідомлення не знайдено."
@@ -123,29 +135,8 @@ msgstr "Отримано нове замовлення"
 msgid "Order #%d has been created."
 msgstr "Замовлення #%d створено."
 
+msgid "Order #%1$d: %2$s"
+msgstr "Замовлення #%1$d: %2$s"
+
 msgid "View order"
 msgstr "Переглянути замовлення"
-
-msgid "Order is being processed"
-msgstr "Замовлення обробляється"
-
-msgid "Order completed"
-msgstr "Замовлення виконано"
-
-msgid "Order on hold"
-msgstr "Замовлення на утриманні"
-
-msgid "Order cancelled"
-msgstr "Замовлення скасовано"
-
-msgid "Order refunded"
-msgstr "Повернення коштів за замовлення"
-
-msgid "Order failed"
-msgstr "Замовлення не виконано"
-
-msgid "Order #%d status: %s"
-msgstr "Статус замовлення #%d: %s"
-
-msgid "Order #%d is now %s."
-msgstr "Замовлення #%d тепер: %s."

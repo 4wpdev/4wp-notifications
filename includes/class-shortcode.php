@@ -86,10 +86,11 @@ class ForWP_Notifications_Shortcode {
 		$rest_url = rest_url( 'forwp/v1' );
 		$nonce    = wp_create_nonce( 'wp_rest' );
 		$poll_interval = 30000;
+		$empty_text    = __( 'No notifications.', 'forwp-notifications' );
 
 		ob_start();
 		?>
-		<div class="forwp-notifications" data-forwp-poll="1" data-forwp-rest-url="<?php echo esc_url( $rest_url ); ?>" data-forwp-nonce="<?php echo esc_attr( $nonce ); ?>" data-forwp-poll-interval="<?php echo esc_attr( (string) $poll_interval ); ?>">
+		<div class="forwp-notifications" data-forwp-poll="1" data-forwp-rest-url="<?php echo esc_url( $rest_url ); ?>" data-forwp-nonce="<?php echo esc_attr( $nonce ); ?>" data-forwp-poll-interval="<?php echo esc_attr( (string) $poll_interval ); ?>" data-forwp-empty-text="<?php echo esc_attr( $empty_text ); ?>">
 			<?php if ( ! empty( $items ) ) : ?>
 				<ul class="forwp-notifications__list">
 					<?php foreach ( $items as $item ) : ?>

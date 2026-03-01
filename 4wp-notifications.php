@@ -3,7 +3,7 @@
  * Plugin Name: 4WP Notifications
  * Plugin URI: https://github.com/4wpdev/4wp-notifications
  * Description: Unified in-app notifications for logged-in users. WooCommerce, admin messages, and extensible sources.
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author: 4wp.dev
  * Author URI: https://4wp.dev
  * Text Domain: forwp-notifications
@@ -42,7 +42,21 @@ add_action( 'plugins_loaded', 'forwp_notifications_init' );
  * Bootstrap plugin.
  */
 function forwp_notifications_init() {
-	load_plugin_textdomain( 'forwp-notifications', false, dirname( FORWP_NOTIFICATIONS_PLUGIN_BASENAME ) . '/languages' );
+	// Load translations from plugin's languages folder (absolute path for reliability).
+	// For Ukrainian: set Site Language to "Українська" in Settings → General.
+	$locale = apply_filters( 'plugin_locale', determine_locale(), 'forwp-notifications' );
+	$mofile = FORWP_NOTIFICATIONS_PLUGIN_DIR . 'languages/forwp-notifications-' . $locale . '.mo';
+	if ( is_readable( $mofile ) ) {
+		load_textdomain( 'forwp-notifications', $mofile );
+	} elseif ( $locale === 'uk' || strpos( $locale, 'uk_' ) === 0 ) {
+		$mofile_uk = FORWP_NOTIFICATIONS_PLUGIN_DIR . 'languages/forwp-notifications-uk_UA.mo';
+		if ( is_readable( $mofile_uk ) ) {
+			load_textdomain( 'forwp-notifications', $mofile_uk );
+		}
+	}
+	if ( ! is_textdomain_loaded( 'forwp-notifications' ) ) {
+		load_plugin_textdomain( 'forwp-notifications', false, dirname( FORWP_NOTIFICATIONS_PLUGIN_BASENAME ) . '/languages' );
+	}
 
 	ForWP_Notifications_Installer::maybe_install();
 	ForWP_Notifications_REST_Controller::register();

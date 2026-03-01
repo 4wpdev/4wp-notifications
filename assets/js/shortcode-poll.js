@@ -48,9 +48,10 @@
 		return div.innerHTML;
 	}
 
-	function renderList(items) {
+	function renderList(items, emptyText) {
 		if (!items || !items.length) {
-			return '<p class="forwp-notifications__empty">No notifications.</p>';
+			var text = (emptyText && String(emptyText).trim()) || 'No notifications.';
+			return '<p class="forwp-notifications__empty">' + escapeHtml(text) + '</p>';
 		}
 		var html = '<ul class="forwp-notifications__list">';
 		for (var i = 0; i < items.length; i++) {
@@ -75,7 +76,8 @@
 				.then(function (r) { return r.json(); })
 				.then(function (data) {
 					if (data.items && Array.isArray(data.items)) {
-						wrapper.innerHTML = renderList(data.items);
+						var emptyText = container.getAttribute('data-forwp-empty-text') || '';
+						wrapper.innerHTML = renderList(data.items, emptyText);
 						bindToggle(container, restUrl, nonce);
 					}
 				})
@@ -138,7 +140,8 @@
 			.then(function (r) { return r.json(); })
 			.then(function (data) {
 				if (data.items && Array.isArray(data.items)) {
-					container.innerHTML = renderList(data.items);
+					var emptyText = container.getAttribute('data-forwp-empty-text') || '';
+					container.innerHTML = renderList(data.items, emptyText);
 					bindToggle(container, restUrl, nonce);
 				}
 			})
