@@ -1,18 +1,18 @@
-# 4wp-notifications — план
+# 4wp-notifications — plan
 
-Універсальний плагін екосистеми [4wpdev](https://github.com/4wpdev): єдина система нотифікацій для авторизованого користувача. Без прив'язки до проєкту; інтеграції опційні.
+Universal plugin of the [4wpdev](https://github.com/4wpdev) ecosystem: a single notification system for the logged-in user. Not tied to a specific project; integrations are optional.
 
-## Логіка
+## Logic
 
-1. **Подія** → хук або `do_action('4wp_notification_event', $user_id, $type, $source, $payload)`
-2. **Запис** → один рядок у таблиці `wp_4wp_notifications`
-3. **Показ** → список для користувача (REST), mark read, CTA з payload
+1. **Event** → hook or `do_action('4wp_notification_event', $user_id, $type, $source, $payload)`
+2. **Storage** → one row in table `wp_4wp_notifications`
+3. **Display** → list for the user (REST), mark read, CTA from payload
 
-Джерела (Woo, LMS, Favorites) не знають про таблицю — лише викликають подію. Черга/воркер — опційно, щоб не блокувати запити.
+Sources (Woo, LMS, Favorites) do not know about the table — they only fire the event. Queue/worker is optional so as not to block requests.
 
 ---
 
-## Структура
+## Structure
 
 ```
 4wp-notifications/
@@ -38,25 +38,25 @@
 
 ---
 
-## Таблиця
+## Table
 
 `wp_4wp_notifications`: `id`, `user_id`, `type`, `source`, `object_id`, `payload` (JSON), `is_read`, `created_at`, `scheduled_at` (nullable).  
-Індекси: `(user_id, is_read)`, `(user_id, created_at DESC)`.
+Indexes: `(user_id, is_read)`, `(user_id, created_at DESC)`.
 
 ---
 
-## Етапи
+## Stages
 
-1. **Core** — таблиця, NotificationManager (create + repository), REST (list, mark read).
-2. **Queue + Worker** — подія в чергу (Action Scheduler), воркер пише в таблицю.
-3. **UI** — блок з Interactivity API (store `4wp/notifications`, список, mark read, CTA).
-4. **Адаптери** — Woo (order status/new order), LMS (за наявними хуками), Favorites (`do_action` після add/remove).
-5. **Пізніше** — push, SMS, SSE/polling для оновлень.
+1. **Core** — table, NotificationManager (create + repository), REST (list, mark read).
+2. **Queue + Worker** — event to queue (Action Scheduler), worker writes to table.
+3. **UI** — block with Interactivity API (store `4wp/notifications`, list, mark read, CTA).
+4. **Adapters** — Woo (order status/new order), LMS (per available hooks), Favorites (`do_action` after add/remove).
+5. **Later** — push, SMS, SSE/polling for updates.
 
 ---
 
-## Умови
+## Requirements
 
 - PHP 7.4+, WP 5.8+.
-- Адаптери підключаються тільки за наявності відповідного плагіна (`class_exists('WooCommerce')` тощо).
-- Один action для всього: `do_action('4wp_notification_event', $user_id, $type, $source, $payload)`; тип і source — рядки (наприклад `order_status_changed`, `woo`).
+- Adapters load only when the corresponding plugin is present (`class_exists('WooCommerce')`, etc.).
+- One action for all: `do_action('4wp_notification_event', $user_id, $type, $source, $payload)`; type and source are strings (e.g. `order_status_changed`, `woo`).

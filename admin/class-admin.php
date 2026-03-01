@@ -55,16 +55,31 @@ class ForWP_Notifications_Admin {
 				<?php wp_nonce_field( 'forwp_notifications_send' ); ?>
 				<table class="form-table">
 					<tr>
-						<th scope="row"><label for="forwp_notif_user"><?php esc_html_e( 'User', 'forwp-notifications' ); ?></label></th>
+						<th scope="row"><?php esc_html_e( 'Users', 'forwp-notifications' ); ?></th>
 						<td>
 							<?php
-							wp_dropdown_users( array(
-								'name'             => 'user_id',
-								'id'               => 'forwp_notif_user',
-								'show_option_none' => __( 'Select user', 'forwp-notifications' ),
-								'capability'       => 'read',
-							) );
-							?>
+							$users = get_users( array( 'orderby' => 'display_name', 'capability' => 'read' ) );
+							if ( ! empty( $users ) ) :
+								?>
+								<p><button type="button" class="button button-small forwp-notif-select-all"><?php esc_html_e( 'Select all', 'forwp-notifications' ); ?></button> <button type="button" class="button button-small forwp-notif-select-none"><?php esc_html_e( 'Deselect all', 'forwp-notifications' ); ?></button></p>
+								<div class="forwp-notif-users-list" style="max-height: 220px; overflow-y: auto; border: 1px solid #8c8f94; border-radius: 4px; padding: 8px 12px; background: #fff;">
+									<?php
+									foreach ( $users as $user ) :
+										$uid = (int) $user->ID;
+										$label = esc_html( $user->display_name );
+										if ( $user->user_login !== $user->display_name ) {
+											$label .= ' <span style="color:#646970;">(' . esc_html( $user->user_login ) . ')</span>';
+										}
+										?>
+										<label class="forwp-notif-user-row" style="display: block; margin: 4px 0;">
+											<input type="checkbox" name="user_ids[]" value="<?php echo $uid; ?>" class="forwp-notif-user-cb" /> <?php echo $label; ?>
+										</label>
+									<?php endforeach; ?>
+								</div>
+								<p class="description"><?php esc_html_e( 'Select one or more users to send the notification to.', 'forwp-notifications' ); ?></p>
+							<?php else : ?>
+								<p><?php esc_html_e( 'No users found.', 'forwp-notifications' ); ?></p>
+							<?php endif; ?>
 						</td>
 					</tr>
 					<tr>
@@ -84,6 +99,14 @@ class ForWP_Notifications_Admin {
 					<button type="submit" class="button button-primary"><?php esc_html_e( 'Send notification', 'forwp-notifications' ); ?></button>
 				</p>
 			</form>
+			<script>
+			(function(){
+				var list = document.querySelector('.forwp-notif-users-list');
+				if (!list) return;
+				document.querySelector('.forwp-notif-select-all')?.addEventListener('click', function(){ list.querySelectorAll('.forwp-notif-user-cb').forEach(function(cb){ cb.checked = true; }); });
+				document.querySelector('.forwp-notif-select-none')?.addEventListener('click', function(){ list.querySelectorAll('.forwp-notif-user-cb').forEach(function(cb){ cb.checked = false; }); });
+			})();
+			</script>
 		</div>
 		<?php
 	}
@@ -92,12 +115,13 @@ class ForWP_Notifications_Admin {
 		if ( ! current_user_can( 'manage_options' ) || ! wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? $_POST['_wpnonce'] : '', 'forwp_notifications_send' ) ) {
 			wp_die( esc_html__( 'Invalid request.', 'forwp-notifications' ) );
 		}
-		$user_id = isset( $_POST['user_id'] ) ? (int) $_POST['user_id'] : 0;
-		$title   = isset( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : '';
-		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
-		$url     = isset( $_POST['url'] ) ? esc_url_raw( $_POST['url'] ) : '';
+		$user_ids = isset( $_POST['user_ids'] ) && is_array( $_POST['user_ids'] ) ? array_map( 'intval', $_POST['user_ids'] ) : array();
+		$user_ids = array_filter( $user_ids );
+		$title    = isset( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : '';
+		$message  = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
+		$url      = isset( $_POST['url'] ) ? esc_url_raw( $_POST['url'] ) : '';
 
-		if ( $user_id <= 0 || $title === '' ) {
+		if ( empty( $user_ids ) || $title === '' ) {
 			wp_safe_redirect( add_query_arg( 'error', 1, admin_url( 'admin.php?page=forwp-notifications' ) ) );
 			exit;
 		}
@@ -107,8 +131,12 @@ class ForWP_Notifications_Admin {
 			$payload['url'] = $url;
 			$payload['actions'] = array( array( 'type' => 'view', 'label' => __( 'View', 'forwp-notifications' ), 'url' => $url ) );
 		}
-		ForWP_Notifications_Queue::push( $user_id, 'custom', 'admin', $payload, null, true );
-		wp_safe_redirect( add_query_arg( 'sent', 1, admin_url( 'admin.php?page=forwp-notifications' ) ) );
+		foreach ( $user_ids as $user_id ) {
+			if ( $user_id > 0 ) {
+				ForWP_Notifications_Queue::push( $user_id, 'custom', 'admin', $payload, null, true );
+			}
+		}
+		wp_safe_redirect( add_query_arg( 'sent', count( $user_ids ), admin_url( 'admin.php?page=forwp-notifications' ) ) );
 		exit;
 	}
 

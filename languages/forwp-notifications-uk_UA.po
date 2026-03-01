@@ -1,0 +1,151 @@
+# Translation of 4wp-notifications (forwp-notifications) in Ukrainian
+# This file is put in the plugin's languages folder.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 4wp-notifications\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-01 20:00+0000\n"
+"PO-Revision-Date: 2026-03-01 20:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Manual\n"
+
+# admin/class-admin.php
+msgid "Notifications"
+msgstr "Повідомлення"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "Send notification"
+msgstr "Надіслати повідомлення"
+
+msgid "Notification sent to %d user(s)."
+msgstr "Повідомлення надіслано %d користувачу(ам)."
+
+msgid "Users"
+msgstr "Користувачі"
+
+msgid "Select all"
+msgstr "Вибрати всіх"
+
+msgid "Deselect all"
+msgstr "Зняти вибір"
+
+msgid "Select one or more users to send the notification to."
+msgstr "Виберіть одного або кількох користувачів для надсилання повідомлення."
+
+msgid "No users found."
+msgstr "Користувачів не знайдено."
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "Link URL (optional)"
+msgstr "Посилання (необов'язково)"
+
+msgid "Invalid request."
+msgstr "Невірний запит."
+
+msgid "View"
+msgstr "Переглянути"
+
+msgid "Notification settings"
+msgstr "Налаштування повідомлень"
+
+msgid "Settings saved."
+msgstr "Налаштування збережено."
+
+msgid "Page with all notifications"
+msgstr "Сторінка з усіма повідомленнями"
+
+msgid "— Select —"
+msgstr "— Обрати —"
+
+msgid "Link \"View all notifications\" in the bell widget will point to this page. Add the shortcode"
+msgstr "Посилання «Переглянути всі повідомлення» у віджеті дзвіночка вестиме на цю сторінку. Додайте шорткод"
+
+msgid "or"
+msgstr "або"
+
+msgid "to this page to display the full list."
+msgstr "на цю сторінку, щоб показати повний список."
+
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+# includes/class-shortcode.php
+msgid "Mark as unread"
+msgstr "Позначити як непрочитане"
+
+msgid "Mark as read"
+msgstr "Позначити як прочитане"
+
+msgid "Go to page"
+msgstr "Перейти на сторінку"
+
+msgid "No notifications."
+msgstr "Немає повідомлень."
+
+# includes/class-shortcode-bell.php
+msgid "Mark all as read"
+msgstr "Позначити всі як прочитані"
+
+msgid "No new notifications"
+msgstr "Немає нових повідомлень"
+
+msgid "View all notifications"
+msgstr "Переглянути всі повідомлення"
+
+msgid "Notification"
+msgstr "Повідомлення"
+
+msgid "ago"
+msgstr "тому"
+
+# rest/class-rest-controller.php
+msgid "Notification not found."
+msgstr "Повідомлення не знайдено."
+
+# integrations/class-woo-adapter.php
+msgid "New order received"
+msgstr "Отримано нове замовлення"
+
+msgid "Order #%d has been created."
+msgstr "Замовлення #%d створено."
+
+msgid "View order"
+msgstr "Переглянути замовлення"
+
+msgid "Order is being processed"
+msgstr "Замовлення обробляється"
+
+msgid "Order completed"
+msgstr "Замовлення виконано"
+
+msgid "Order on hold"
+msgstr "Замовлення на утриманні"
+
+msgid "Order cancelled"
+msgstr "Замовлення скасовано"
+
+msgid "Order refunded"
+msgstr "Повернення коштів за замовлення"
+
+msgid "Order failed"
+msgstr "Замовлення не виконано"
+
+msgid "Order #%d status: %s"
+msgstr "Статус замовлення #%d: %s"
+
+msgid "Order #%d is now %s."
+msgstr "Замовлення #%d тепер: %s."

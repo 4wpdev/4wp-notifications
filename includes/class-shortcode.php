@@ -112,7 +112,7 @@ class ForWP_Notifications_Shortcode {
 								<?php endif; ?>
 								<span class="forwp-notifications__date"><?php echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $item['created_at'] ) ) ); ?></span>
 								<?php if ( ! empty( $item['payload']['url'] ) ) : ?>
-									<a class="forwp-notifications__link" href="<?php echo esc_url( $item['payload']['url'] ); ?>"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span><?php esc_html_e( 'View', 'forwp-notifications' ); ?></a>
+									<a class="forwp-notifications__link" href="<?php echo esc_url( $item['payload']['url'] ); ?>" aria-label="<?php esc_attr_e( 'Go to page', 'forwp-notifications' ); ?>"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span></a>
 								<?php endif; ?>
 							</div>
 							<button type="button" class="<?php echo esc_attr( $toggle_class ); ?> forwp-js-toggle" data-id="<?php echo esc_attr( (string) $item['id'] ); ?>" data-is-read="<?php echo $is_read ? '1' : '0'; ?>" aria-label="<?php echo esc_attr( $toggle_label ); ?>"><span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span></button>
@@ -158,7 +158,7 @@ class ForWP_Notifications_Shortcode {
 								<?php endif; ?>
 								<span class="forwp-notifications__date"><?php echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $item['created_at'] ) ) ); ?></span>
 								<?php if ( ! empty( $item['payload']['url'] ) ) : ?>
-									<a class="forwp-notifications__link" href="<?php echo esc_url( $item['payload']['url'] ); ?>"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span><?php esc_html_e( 'View', 'forwp-notifications' ); ?></a>
+									<a class="forwp-notifications__link" href="<?php echo esc_url( $item['payload']['url'] ); ?>" aria-label="<?php esc_attr_e( 'Go to page', 'forwp-notifications' ); ?>"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span></a>
 								<?php endif; ?>
 								<?php if ( ( (int) $item['is_read'] ) !== 1 ) : ?>
 									<a class="forwp-notifications__mark-read" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'forwp_mark_read', $item['id'] ), 'forwp_notification_read_' . $item['id'] ) ); ?>"><?php esc_html_e( 'Mark as read', 'forwp-notifications' ); ?></a>

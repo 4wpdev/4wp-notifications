@@ -26,7 +26,7 @@
 		var toggleLabel = isRead ? 'Mark as unread' : 'Mark as read';
 		var toggleIcon = isRead ? 'dashicons-hidden' : 'dashicons-visibility';
 		var toggleReadClass = isRead ? ' forwp-notifications__toggle--read' : '';
-		var linkHtml = url ? '<a class="forwp-notifications__link" href="' + escapeHtml(url) + '"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span>View</a>' : '';
+		var linkHtml = url ? '<a class="forwp-notifications__link" href="' + escapeHtml(url) + '" aria-label="Go to page"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span></a>' : '';
 		var toggleHtml = '<button type="button" class="forwp-notifications__toggle' + toggleReadClass + ' forwp-js-toggle" data-id="' + item.id + '" data-is-read="' + (isRead ? '1' : '0') + '" aria-label="' + escapeHtml(toggleLabel) + '"><span class="dashicons ' + toggleIcon + '" aria-hidden="true"></span></button>';
 		var iconClass = getItemIconClass(source);
 		return (
