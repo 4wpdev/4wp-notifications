@@ -1,0 +1,21 @@
+{
+	"apiVersion": 2,
+	"name": "forwp/notifications",
+	"title": "4WP Notifications",
+	"category": "widgets",
+	"description": "Display in-app notifications for the logged-in user.",
+	"textdomain": "forwp-notifications",
+	"icon": "bell",
+	"attributes": {
+		"limit": {
+			"type": "number",
+			"default": 20
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"interactivity": true
+	},
+	"viewScriptModule": "file:./view.js"
+}

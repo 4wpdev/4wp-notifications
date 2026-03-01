@@ -1,0 +1,247 @@
+/* 4wp-notifications: bell widget. Own BEM (.forwp-notifications-bell). No theme dependency. */
+
+.forwp-notifications-bell {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+}
+
+.forwp-notifications-bell__button {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	border-radius: 8px;
+	padding: 0;
+	transition: background 0.2s ease;
+	z-index: 1;
+}
+
+.forwp-notifications-bell__button:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.forwp-notifications-bell__button img,
+.forwp-notifications-bell__button .dashicons {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+}
+
+.forwp-notifications-bell__badge {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	background: #d54033;
+	color: #fff;
+	border-radius: 9px;
+	font-size: 10px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+}
+
+.forwp-notifications-bell__dropdown {
+	position: absolute;
+	top: calc(100% + 8px);
+	right: 0;
+	left: auto;
+	width: 360px;
+	max-width: calc(100vw - 32px);
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-8px);
+	transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+	z-index: 10000;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.forwp-notifications-bell__dropdown--active {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+.forwp-notifications-bell__dropdown-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px 20px;
+	border-bottom: 1px solid #e5e7eb;
+	background: #f9fafb;
+}
+
+.forwp-notifications-bell__dropdown-title {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.forwp-notifications-bell__mark-all {
+	background: none;
+	border: none;
+	color: #2563eb;
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: none;
+}
+
+.forwp-notifications-bell__mark-all:hover {
+	text-decoration: underline;
+}
+
+.forwp-notifications-bell__list {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.forwp-notifications-bell__list-empty {
+	padding: 32px 20px;
+	text-align: center;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.forwp-notifications-bell__list-empty p {
+	margin: 0;
+}
+
+.forwp-notifications-bell__item {
+	display: flex;
+	gap: 12px;
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #374151;
+	border-bottom: 1px solid #f3f4f6;
+	transition: background 0.2s ease;
+}
+
+.forwp-notifications-bell__item--unread {
+	background: #f9fafb;
+	font-weight: 500;
+}
+
+.forwp-notifications-bell__item:hover {
+	background: #f3f4f6;
+}
+
+.forwp-notifications-bell__item-icon {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #e5e7eb;
+	border-radius: 8px;
+}
+
+.forwp-notifications-bell__item-content {
+	flex: 1;
+	min-width: 0;
+}
+
+.forwp-notifications-bell__item-toggle {
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: transparent;
+	border-radius: 6px;
+	cursor: pointer;
+	color: #6b7280;
+	padding: 0;
+	transition: color 0.2s ease, background 0.2s ease;
+}
+
+.forwp-notifications-bell__item-toggle:hover {
+	color: #2563eb;
+	background: #eff6ff;
+}
+
+.forwp-notifications-bell__item-toggle .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+/* Read state: closed eye, gray */
+.forwp-notifications-bell__item-toggle--read,
+.forwp-notifications-bell__item-toggle--read .dashicons {
+	color: #9ca3af;
+}
+.forwp-notifications-bell__item-toggle--read:hover {
+	color: #6b7280;
+}
+
+.forwp-notifications-bell__item-title {
+	margin: 0 0 4px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #1f2937;
+}
+
+.forwp-notifications-bell__item-text {
+	margin: 0 0 4px 0;
+	font-size: 13px;
+	color: #6b7280;
+	line-height: 1.4;
+}
+
+.forwp-notifications-bell__item-time {
+	font-size: 12px;
+	color: #9ca3af;
+}
+
+.forwp-notifications-bell__item-link-icon {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 6px;
+	vertical-align: middle;
+	color: #6b7280;
+}
+.forwp-notifications-bell__item-link-icon .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+.forwp-notifications-bell__footer {
+	padding: 12px 20px;
+	border-top: 1px solid #e5e7eb;
+	background: #fff;
+}
+
+.forwp-notifications-bell__footer a {
+	color: #2563eb;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+.forwp-notifications-bell__footer a:hover {
+	text-decoration: underline;
+}
