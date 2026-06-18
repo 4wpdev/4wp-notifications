@@ -1,57 +1,57 @@
-.forwp-notifications__list {
+.4wp-notifications__list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.forwp-notifications__item {
+.4wp-notifications__item {
 	display: flex;
 	align-items: flex-start;
 	gap: 0.75rem;
 	border-bottom: 1px solid #e0e0e0;
 	padding: 0.75rem 0;
 }
-.forwp-notifications__item .forwp-notifications__content {
+.4wp-notifications__item .4wp-notifications__content {
 	flex: 1;
 	min-width: 0;
 }
-.forwp-notifications__item-icon {
+.4wp-notifications__item-icon {
 	flex-shrink: 0;
 	display: flex;
 	align-items: flex-start;
 	color: #6b7280;
 }
-.forwp-notifications__item-icon .dashicons {
+.4wp-notifications__item-icon .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 }
-.forwp-notifications__item.is-read {
+.4wp-notifications__item.is-read {
 	opacity: 0.7;
 }
-.forwp-notifications__title {
+.4wp-notifications__title {
 	display: block;
 	font-weight: 600;
 }
-.forwp-notifications__message {
+.4wp-notifications__message {
 	margin: 0.25rem 0;
 }
-.forwp-notifications__date {
+.4wp-notifications__date {
 	font-size: 0.875em;
 	color: #666;
 }
-.forwp-notifications__link {
+.4wp-notifications__link {
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	margin-right: 0.5rem;
 }
-.forwp-notifications__link-icon.dashicons {
+.4wp-notifications__link-icon.dashicons {
 	font-size: 16px;
 	width: 16px;
 	height: 16px;
 }
 
-.forwp-notifications__toggle {
+.4wp-notifications__toggle {
 	flex-shrink: 0;
 	width: 36px;
 	height: 36px;
@@ -66,21 +66,21 @@
 	padding: 0;
 	transition: color 0.2s ease, background 0.2s ease;
 }
-.forwp-notifications__toggle:hover {
+.4wp-notifications__toggle:hover {
 	color: #2563eb;
 	background: #eff6ff;
 }
-.forwp-notifications__toggle .dashicons {
+.4wp-notifications__toggle .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 }
 
 /* Read state: closed eye, gray */
-.forwp-notifications__toggle--read,
-.forwp-notifications__toggle--read .dashicons {
+.4wp-notifications__toggle--read,
+.4wp-notifications__toggle--read .dashicons {
 	color: #9ca3af;
 }
-.forwp-notifications__toggle--read:hover {
+.4wp-notifications__toggle--read:hover {
 	color: #6b7280;
 }

@@ -1,11 +1,13 @@
 {
-	"apiVersion": 2,
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
 	"name": "forwp/notifications",
-	"title": "4WP Notifications",
+	"title": "4WP Notifications List",
 	"category": "widgets",
-	"description": "Display in-app notifications for the logged-in user.",
-	"textdomain": "forwp-notifications",
-	"icon": "bell",
+	"description": "Display the full in-app notifications list for the logged-in user.",
+	"textdomain": "4wp-notifications",
+	"icon": "list-view",
+	"keywords": [ "4wp", "notifications", "inbox", "alerts", "bell" ],
 	"attributes": {
 		"limit": {
 			"type": "number",
@@ -14,8 +16,14 @@
 	},
 	"supports": {
 		"html": false,
-		"align": true,
-		"interactivity": true
+		"align": true
 	},
-	"viewScriptModule": "file:./view.js"
+	"editorScript": "file:./editor.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:../../css/shortcode.css",
+	"example": {
+		"attributes": {
+			"limit": 20
+		}
+	}
 }

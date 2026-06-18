@@ -1,6 +1,6 @@
 <?php
 /**
- * Worker: обробляє події з черги (Action Scheduler) і створює нотифікації.
+ * Worker: processes queued events (Action Scheduler) and creates notifications.
  *
  * @package ForWP_Notifications
  */
@@ -16,12 +16,12 @@ class ForWP_Notifications_Worker {
 	}
 
 	/**
-	 * Обробити одну подію. Action Scheduler передає array_values($args) окремими аргументами.
+	 * Process one queued event. Action Scheduler passes array_values( $args ) as separate arguments.
 	 *
-	 * @param int    $user_id   User ID.
-	 * @param string $type      Type.
-	 * @param string $source    Source.
-	 * @param array  $payload   Payload.
+	 * @param int      $user_id   User ID.
+	 * @param string   $type      Type.
+	 * @param string   $source    Source.
+	 * @param array    $payload   Payload.
 	 * @param int|null $object_id Object ID.
 	 */
 	public function process( $user_id, $type, $source, $payload, $object_id = null ) {

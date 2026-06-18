@@ -1,0 +1,28 @@
+{
+	"name": "4wp-dev/4wp-notifications",
+	"description": "4WP Notifications — in-app inbox, bell block, WooCommerce alerts, REST send API.",
+	"type": "wordpress-plugin",
+	"version": "1.2.0",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=7.4"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpunit/phpunit": "^9.6",
+		"squizlabs/php_codesniffer": "^3.9",
+		"wp-coding-standards/wpcs": "^3.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"lint": "phpcs",
+		"lint:fix": "phpcbf",
+		"test": "phpunit"
+	}
+}

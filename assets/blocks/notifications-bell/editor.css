@@ -1,0 +1,72 @@
+/* Editor preview: static bell + neutral badge (no SSR, no dashicons). */
+
+.forwp-notifications-bell--editor {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+}
+
+.forwp-notifications-bell__button--editor {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: transparent;
+	border-radius: 8px;
+	padding: 0;
+	color: currentColor;
+}
+
+.forwp-notifications-bell__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+}
+
+.forwp-notifications-bell__icon svg {
+	display: block;
+	color: inherit;
+	fill: currentColor;
+}
+
+.forwp-notifications-bell__badge--editor {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	min-width: 16px;
+	height: 16px;
+	padding: 0 4px;
+	background: #d54033;
+	color: #fff;
+	border-radius: 8px;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+	pointer-events: none;
+}
+
+.wp-block-navigation .forwp-notifications-bell--editor {
+	min-height: 24px;
+}
+
+.wp-block-navigation .forwp-notifications-bell__button--editor {
+	width: auto;
+	height: auto;
+	min-width: 24px;
+	min-height: 24px;
+	color: var(--wp--preset--color--contrast, currentColor);
+}
+
+.wp-block-navigation .forwp-notifications-bell__icon svg {
+	color: inherit;
+	fill: currentColor;
+}

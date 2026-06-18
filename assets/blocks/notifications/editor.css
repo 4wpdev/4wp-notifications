@@ -1,0 +1,8 @@
+@import url("../../css/shortcode.css");
+
+.forwp-notifications-block-editor__empty {
+	margin: 0;
+	padding: 8px 0;
+	color: #50575e;
+	font-size: 13px;
+}

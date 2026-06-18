@@ -72,15 +72,17 @@ class ForWP_Notifications_Repository {
 		$user_id = (int) $user_id;
 		$limit   = absint( $limit );
 		$offset  = absint( $offset );
-		$rows    = $this->wpdb->get_results(
-			$this->wpdb->prepare(
-				"SELECT id, user_id, type, source, object_id, payload, is_read, created_at FROM {$this->table} WHERE user_id = %d ORDER BY created_at DESC LIMIT %d OFFSET %d",
-				$user_id,
-				$limit,
-				$offset
-			),
-			ARRAY_A
+
+		$query = $this->wpdb->prepare(
+			'SELECT id, user_id, type, source, object_id, payload, is_read, created_at FROM %i WHERE user_id = %d ORDER BY created_at DESC LIMIT %d OFFSET %d',
+			$this->table,
+			$user_id,
+			$limit,
+			$offset
 		);
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$rows = $this->wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $query from prepare() above; %i table identifier (WP 6.2+).
 		foreach ( $rows as &$row ) {
 			$row['payload'] = $row['payload'] ? json_decode( $row['payload'], true ) : array();
 		}
@@ -94,12 +96,14 @@ class ForWP_Notifications_Repository {
 	 * @return int
 	 */
 	public function count_unread( $user_id ) {
-		return (int) $this->wpdb->get_var(
-			$this->wpdb->prepare(
-				"SELECT COUNT(*) FROM {$this->table} WHERE user_id = %d AND is_read = 0",
-				(int) $user_id
-			)
+		$query = $this->wpdb->prepare(
+			'SELECT COUNT(*) FROM %i WHERE user_id = %d AND is_read = 0',
+			$this->table,
+			(int) $user_id
 		);
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return (int) $this->wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $query from prepare() above; %i table identifier (WP 6.2+).
 	}
 
 	/**

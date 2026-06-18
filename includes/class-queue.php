@@ -1,6 +1,6 @@
 <?php
 /**
- * Queue: кладе подію в чергу (Action Scheduler) або створює нотифікацію синхронно.
+ * Queue: enqueue events (Action Scheduler) or create notifications synchronously.
  *
  * @package ForWP_Notifications
  */
@@ -14,15 +14,16 @@ class ForWP_Notifications_Queue {
 	const HOOK = 'forwp_notifications_process_event';
 
 	/**
-	 * Додати подію в чергу або створити нотифікацію одразу.
-	 * Action Scheduler не виконує завдання миттєво — може бути затримка хвилини. Для $sync = true запис у БД одразу.
+	 * Enqueue an event or create a notification immediately.
+	 *
+	 * Action Scheduler may delay execution by up to a minute. When $sync is true, write to the DB immediately.
 	 *
 	 * @param int    $user_id   User ID.
 	 * @param string $type      Type.
 	 * @param string $source    Source.
 	 * @param array  $payload   Payload.
 	 * @param int    $object_id Optional object ID.
-	 * @param bool   $sync      True = записати в БД одразу (без черги). Для адмін-повідомлень — true.
+	 * @param bool   $sync      True = write to DB immediately (skip queue). Use for admin broadcasts.
 	 */
 	public static function push( $user_id, $type, $source = 'core', $payload = array(), $object_id = null, $sync = false ) {
 		if ( $sync ) {

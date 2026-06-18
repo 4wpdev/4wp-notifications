@@ -20,7 +20,7 @@
 	var DROPDOWN_ACTIVE_CLASS = 'forwp-notifications-bell__dropdown--active';
 	var POLL_INTERVAL_MS = 30000;
 
-	function bindDropdownToggle(wrapper) {
+	function bindDropdownToggle(wrapper, restUrl, nonce) {
 		var btn = wrapper.querySelector('.forwp-notifications-bell__button');
 		var dropdown = wrapper.querySelector('.forwp-notifications-bell__dropdown');
 		if (!btn || !dropdown) return;
@@ -35,6 +35,9 @@
 			} else {
 				dropdown.classList.add(DROPDOWN_ACTIVE_CLASS);
 				btn.setAttribute('aria-expanded', 'true');
+				fetchNotifications(wrapper, restUrl, nonce, function () {
+					bindItemToggles(wrapper, restUrl, nonce);
+				});
 			}
 		});
 
@@ -247,22 +250,16 @@
 		var restUrl = wrapper.getAttribute('data-forwp-rest-url');
 		var nonce = wrapper.getAttribute('data-forwp-nonce');
 		if (!restUrl || !nonce) return;
-		bindDropdownToggle(wrapper);
+		bindDropdownToggle(wrapper, restUrl, nonce);
 		bindMarkAllRead(wrapper, restUrl, nonce);
 		bindItemToggles(wrapper, restUrl, nonce);
 		fetchNotifications(wrapper, restUrl, nonce, function () {
 			bindItemToggles(wrapper, restUrl, nonce);
 		});
 		setInterval(function () {
-			fetch(restUrl + '/notifications/unread-count', {
-				credentials: 'same-origin',
-				headers: { 'X-WP-Nonce': nonce }
-			})
-				.then(function (r) { return r.json(); })
-				.then(function (data) {
-					if (data.unread_count != null) setBadge(wrapper, data.unread_count);
-				})
-				.catch(function () {});
+			fetchNotifications(wrapper, restUrl, nonce, function () {
+				bindItemToggles(wrapper, restUrl, nonce);
+			});
 		}, POLL_INTERVAL_MS);
 	}
 

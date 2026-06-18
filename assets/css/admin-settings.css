@@ -1,0 +1,338 @@
+/**
+ * 4WP Notifications admin — aligned with 4WP Drive / Weather shell.
+ */
+
+.forwp-notifications-admin-shell {
+	max-width: 1100px;
+}
+
+.forwp-notifications-admin-shell h1.forwp-notifications-admin-heading {
+	align-items: center;
+	display: flex;
+	font-size: 1.6rem;
+	font-weight: 600;
+	gap: 10px;
+	margin-bottom: 0.25rem;
+}
+
+.forwp-notifications-admin-heading__icon {
+	align-items: center;
+	color: var(--wp-admin-theme-color, #3858e9);
+	display: inline-flex;
+	flex-shrink: 0;
+	justify-content: center;
+	line-height: 0;
+}
+
+.forwp-notifications-admin-heading__icon svg {
+	display: block;
+}
+
+.forwp-notifications-admin-lead {
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
+	margin: 0 0 16px;
+	max-width: 72ch;
+}
+
+.forwp-notifications-admin-app {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+}
+
+.forwp-notifications-admin-app .forwp-notifications-tab-panel .components-tab-panel__tabs {
+	align-items: stretch;
+	background: #fafafa;
+	border-bottom: 1px solid #e0e0e0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.forwp-notifications-admin-app .forwp-notifications-tab-panel .components-tab-panel__tabs .forwp-notifications-tab {
+	border: 1px solid transparent;
+	border-bottom: none;
+	border-radius: 0;
+	box-shadow: none;
+	font-weight: 500;
+	height: auto;
+	margin: 0 !important;
+	min-height: 0;
+	padding: 10px 14px;
+}
+
+.forwp-notifications-admin-app .forwp-notifications-tab-panel .components-tab-panel__tabs .forwp-notifications-tab.is-active {
+	background: #fff;
+	border-color: #e0e0e0 #e0e0e0 #fff;
+	margin-bottom: -1px !important;
+	position: relative;
+	z-index: 1;
+}
+
+.forwp-notifications-admin-app .forwp-notifications-tab-panel .components-tab-panel__tab-content {
+	padding: 18px 20px 24px;
+}
+
+.forwp-notifications-intro-card {
+	background: #fafafa;
+	border: 1px dashed #c3c4c7;
+	border-radius: 8px;
+	margin-bottom: 16px;
+	padding: 16px 20px;
+}
+
+.forwp-notifications-intro-card__title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0 0 8px;
+}
+
+.forwp-notifications-intro-card__text {
+	color: #2c3338;
+	font-size: 14px;
+	line-height: 1.55;
+	margin: 0;
+	max-width: 72ch;
+}
+
+.forwp-notifications-card {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	margin-bottom: 16px;
+	padding: 18px 20px;
+}
+
+.forwp-notifications-admin-section-title {
+	font-size: 1.05rem;
+	font-weight: 600;
+	margin: 0 0 12px;
+}
+
+.forwp-notifications-admin-muted {
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
+	margin: 8px 0 0;
+	max-width: 72ch;
+}
+
+.forwp-notifications-field + .forwp-notifications-field {
+	margin-top: 16px;
+}
+
+.forwp-notifications-field__label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.forwp-notifications-field__help,
+.forwp-notifications-field__links {
+	color: #646970;
+	font-size: 13px;
+	margin: 6px 0 0;
+}
+
+.forwp-notifications-form-actions {
+	margin: 20px 0 0;
+}
+
+.forwp-notifications-ref-table code {
+	font-size: 12px;
+}
+
+.forwp-notifications-admin-list {
+	margin: 12px 0 0;
+	padding-left: 1.2em;
+}
+
+.forwp-notifications-admin-list--ordered {
+	padding-left: 1.4em;
+}
+
+.forwp-notifications-code {
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	margin: 0;
+	overflow-x: auto;
+	padding: 12px 14px;
+}
+
+.forwp-notifications-code code {
+	font-size: 13px;
+}
+
+/* Direct notifications — recipients */
+.forwp-notifications-recipient-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.forwp-notifications-recipient-groups {
+	display: grid;
+	gap: 12px;
+	max-height: 420px;
+	overflow-y: auto;
+}
+
+.forwp-notifications-recipient-group {
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.forwp-notifications-recipient-group.is-role-selected {
+	border-color: var(--wp-admin-theme-color, #3858e9);
+	box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #3858e9);
+}
+
+.forwp-notifications-role-pick {
+	align-items: center;
+	display: inline-flex;
+	gap: 8px;
+}
+
+.forwp-notifications-role-pick input {
+	margin: 0;
+}
+
+.forwp-notifications-recipient-group__head {
+	align-items: center;
+	background: #fafafa;
+	border-bottom: 1px solid #e0e0e0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 10px 14px;
+}
+
+.forwp-notifications-recipient-group__count {
+	color: #646970;
+	font-size: 12px;
+}
+
+.forwp-notifications-recipient-list {
+	list-style: none;
+	margin: 0;
+	padding: 8px 10px;
+}
+
+.forwp-notifications-recipient-list li + li {
+	margin-top: 2px;
+}
+
+.forwp-notifications-recipient-row {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 4px 6px;
+	border-radius: 4px;
+}
+
+.forwp-notifications-recipient-row:hover {
+	background: #f6f7f7;
+}
+
+.forwp-notifications-recipient-row__login {
+	color: #646970;
+	font-size: 12px;
+}
+
+/* Notification types — source cards */
+.forwp-notifications-source-grid {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	margin-bottom: 8px;
+}
+
+.forwp-notifications-source-card {
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	padding: 16px;
+}
+
+.forwp-notifications-source-card.is-live {
+	border-color: #c3e6cb;
+}
+
+.forwp-notifications-source-card.is-planned,
+.forwp-notifications-source-card.is-unavailable {
+	background: #fafafa;
+}
+
+.forwp-notifications-source-card__head {
+	align-items: flex-start;
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.forwp-notifications-source-card__title {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+.forwp-notifications-source-card__slug {
+	color: #646970;
+	font-size: 12px;
+	margin: 2px 0 0;
+}
+
+.forwp-notifications-source-card__desc {
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+	margin: 0 0 12px;
+}
+
+.forwp-notifications-badge {
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1;
+	padding: 4px 8px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.forwp-notifications-badge--live {
+	background: #edfaef;
+	color: #1e4620;
+}
+
+.forwp-notifications-badge--planned,
+.forwp-notifications-badge--off {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+.forwp-notifications-toggle-list {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.forwp-notifications-toggle-row {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	margin: 0 0 8px;
+}
+
+.forwp-notifications-toggle-row:last-child {
+	margin-bottom: 0;
+}

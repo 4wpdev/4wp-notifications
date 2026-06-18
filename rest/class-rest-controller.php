@@ -31,70 +31,206 @@ class ForWP_Notifications_REST_Controller {
 	}
 
 	public function register_routes() {
-		register_rest_route( self::NAMESPACE, '/notifications', array(
+		register_rest_route(
+			self::NAMESPACE,
+			'/notifications',
 			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'check_logged_in' ),
-				'args'                => array(
-					'per_page' => array(
-						'type'    => 'integer',
-						'default' => 20,
-						'minimum' => 1,
-						'maximum' => 100,
-					),
-					'page'     => array(
-						'type'    => 'integer',
-						'default' => 1,
-						'minimum' => 1,
-					),
-				),
-			),
-		) );
-		register_rest_route( self::NAMESPACE, '/notifications/unread-count', array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_unread_count' ),
-				'permission_callback' => array( $this, 'check_logged_in' ),
-			),
-		) );
-		register_rest_route( self::NAMESPACE, '/notifications/(?P<id>\d+)', array(
-			array(
-				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => array( $this, 'mark_read' ),
-				'permission_callback' => array( $this, 'check_logged_in' ),
-				'args'                => array(
-					'id' => array(
-						'required'          => true,
-						'type'              => 'integer',
-						'validate_callback' => function ( $v ) { return $v > 0; },
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+					'args'                => array(
+						'per_page' => array(
+							'type'    => 'integer',
+							'default' => 20,
+							'minimum' => 1,
+							'maximum' => 100,
+						),
+						'page'     => array(
+							'type'    => 'integer',
+							'default' => 1,
+							'minimum' => 1,
+						),
 					),
 				),
-			),
-		) );
-		register_rest_route( self::NAMESPACE, '/notifications/mark-all-read', array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'create_item' ),
+					'permission_callback' => array( $this, 'check_can_send' ),
+					'args'                => $this->get_create_args(),
+				),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/notifications/unread-count',
 			array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'mark_all_read' ),
-				'permission_callback' => array( $this, 'check_logged_in' ),
-			),
-		) );
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_unread_count' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+				),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/notifications/(?P<id>\d+)',
+			array(
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'mark_read' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+					'args'                => array(
+						'id' => array(
+							'required'          => true,
+							'type'              => 'integer',
+							'validate_callback' => function ( $v ) {
+								return $v > 0; },
+						),
+					),
+				),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/notifications/mark-all-read',
+			array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'mark_all_read' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+				),
+			)
+		);
 	}
 
 	public function check_logged_in( WP_REST_Request $request ) {
 		return is_user_logged_in();
 	}
 
+	/**
+	 * @return bool|WP_Error
+	 */
+	public function check_can_send( WP_REST_Request $request ) {
+		if ( ! ForWP_Notifications_Sender::user_can_send() ) {
+			return new WP_Error(
+				'forwp_notifications_forbidden',
+				__( 'You are not allowed to send notifications.', '4wp-notifications' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
+	private function get_create_args() {
+		return array(
+			'user_id'   => array(
+				'type'              => 'integer',
+				'minimum'           => 1,
+				'sanitize_callback' => 'absint',
+			),
+			'user_ids'  => array(
+				'type'  => 'array',
+				'items' => array(
+					'type'              => 'integer',
+					'minimum'           => 1,
+					'sanitize_callback' => 'absint',
+				),
+			),
+			'type'      => array(
+				'type'              => 'string',
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_key',
+			),
+			'source'    => array(
+				'type'              => 'string',
+				'default'           => 'core',
+				'sanitize_callback' => 'sanitize_key',
+			),
+			'title'     => array(
+				'type'              => 'string',
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'message'   => array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_textarea_field',
+			),
+			'url'       => array(
+				'type'              => 'string',
+				'format'            => 'uri',
+				'sanitize_callback' => 'esc_url_raw',
+			),
+			'object_id' => array(
+				'type'              => 'integer',
+				'minimum'           => 1,
+				'sanitize_callback' => 'absint',
+			),
+			'payload'   => array(
+				'type'                 => 'object',
+				'additionalProperties' => true,
+			),
+		);
+	}
+
+	public function create_item( WP_REST_Request $request ) {
+		$user_ids = ForWP_Notifications_Sender::normalize_user_ids(
+			(int) $request->get_param( 'user_id' ),
+			(array) $request->get_param( 'user_ids' )
+		);
+
+		$payload = $request->get_param( 'payload' );
+		$payload = is_array( $payload ) ? $payload : array();
+
+		foreach ( array( 'title', 'message', 'url' ) as $key ) {
+			$value = $request->get_param( $key );
+			if ( null !== $value && '' !== $value && ! isset( $payload[ $key ] ) ) {
+				$payload[ $key ] = $value;
+			}
+		}
+
+		$result = ForWP_Notifications_Sender::send(
+			$user_ids,
+			(string) $request->get_param( 'type' ),
+			(string) $request->get_param( 'source' ),
+			$payload,
+			$request->get_param( 'object_id' ) ? (int) $request->get_param( 'object_id' ) : null
+		);
+
+		if ( is_wp_error( $result ) ) {
+			$data   = $result->get_error_data();
+			$status = is_array( $data ) && isset( $data['status'] ) ? (int) $data['status'] : 400;
+
+			return new WP_REST_Response(
+				array(
+					'code'    => $result->get_error_code(),
+					'message' => $result->get_error_message(),
+					'data'    => $result->get_error_data(),
+				),
+				$status
+			);
+		}
+
+		return new WP_REST_Response( $result, 201 );
+	}
+
 	public function get_items( WP_REST_Request $request ) {
 		$per_page = (int) $request->get_param( 'per_page' );
 		$page     = (int) $request->get_param( 'page' );
 		$offset   = ( $page - 1 ) * $per_page;
-		$items  = $this->manager->get_for_user( null, $per_page, $offset );
-		$unread = $this->manager->count_unread( null );
-		return new WP_REST_Response( array(
-			'items'        => $items,
-			'unread_count' => $unread,
-		), 200 );
+		$items    = $this->manager->get_for_user( null, $per_page, $offset );
+		$unread   = $this->manager->count_unread( null );
+		return new WP_REST_Response(
+			array(
+				'items'        => $items,
+				'unread_count' => $unread,
+			),
+			200
+		);
 	}
 
 	public function get_unread_count( WP_REST_Request $request ) {
@@ -110,13 +246,25 @@ class ForWP_Notifications_REST_Controller {
 			? $this->manager->mark_read( $id, null )
 			: $this->manager->mark_unread( $id, null );
 		if ( ! $ok ) {
-			return new WP_REST_Response( array( 'message' => __( 'Notification not found.', 'forwp-notifications' ) ), 404 );
+			return new WP_REST_Response( array( 'message' => __( 'Notification not found.', '4wp-notifications' ) ), 404 );
 		}
-		return new WP_REST_Response( array( 'success' => true, 'is_read' => $is_read ), 200 );
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+				'is_read' => $is_read,
+			),
+			200
+		);
 	}
 
 	public function mark_all_read( WP_REST_Request $request ) {
 		$updated = $this->manager->mark_all_read( null );
-		return new WP_REST_Response( array( 'success' => true, 'updated' => $updated ), 200 );
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+				'updated' => $updated,
+			),
+			200
+		);
 	}
 }

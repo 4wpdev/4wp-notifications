@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "forwp/notifications-bell",
+	"title": "4WP Notifications Bell",
+	"category": "theme",
+	"parent": [ "core/navigation" ],
+	"description": "Bell icon with a dropdown of recent notifications. Add inside a Navigation block (header menu).",
+	"textdomain": "4wp-notifications",
+	"icon": "bell",
+	"keywords": [ "4wp", "notifications", "bell", "menu", "navigation", "alert" ],
+	"attributes": {
+		"limit": {
+			"type": "number",
+			"default": 20
+		},
+		"allUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"multiple": true,
+		"interactivity": false
+	},
+	"editorScript": "file:./editor.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:../../css/bell-widget.css",
+	"example": {
+		"attributes": {
+			"limit": 10
+		}
+	}
+}

@@ -27,6 +27,9 @@ class ForWP_Notifications_Woo_Adapter {
 	 * @param WC_Order $order    Order (optional, WC 3.0+).
 	 */
 	public function on_new_order( $order_id, $order = null ) {
+		if ( ! ForWP_Notifications_Plugin_Settings::is_woo_order_created_enabled() ) {
+			return;
+		}
 		if ( ! $order instanceof WC_Order ) {
 			$order = wc_get_order( $order_id );
 		}
@@ -48,11 +51,16 @@ class ForWP_Notifications_Woo_Adapter {
 			'order_created',
 			'woo',
 			array(
-				'title'   => __( 'New order received', 'forwp-notifications' ),
-				'message' => sprintf( __( 'Order #%d has been created.', 'forwp-notifications' ), $order_id ),
+				'title'   => __( 'New order received', '4wp-notifications' ),
+				/* translators: %d: WooCommerce order ID */
+				'message' => sprintf( __( 'Order #%d has been created.', '4wp-notifications' ), $order_id ),
 				'url'     => $view_url,
 				'actions' => array(
-					array( 'type' => 'view', 'label' => __( 'View order', 'forwp-notifications' ), 'url' => $view_url ),
+					array(
+						'type'  => 'view',
+						'label' => __( 'View order', '4wp-notifications' ),
+						'url'   => $view_url,
+					),
 				),
 			),
 			$order_id
@@ -68,6 +76,9 @@ class ForWP_Notifications_Woo_Adapter {
 	 * @param WC_Order $order      Order.
 	 */
 	public function on_order_status_changed( $order_id, $from, $to, $order = null ) {
+		if ( ! ForWP_Notifications_Plugin_Settings::is_woo_status_changed_enabled() ) {
+			return;
+		}
 		if ( ! $order instanceof WC_Order ) {
 			$order = wc_get_order( $order_id );
 		}
@@ -78,12 +89,17 @@ class ForWP_Notifications_Woo_Adapter {
 		if ( $user_id <= 0 ) {
 			return;
 		}
-		$view_url = $order->get_view_order_url();
+		$view_url     = $order->get_view_order_url();
 		$status_label = function_exists( 'wc_get_order_status_name' ) ? wc_get_order_status_name( 'wc-' . $to ) : $to;
-		if ( empty( $status_label ) || $status_label === 'wc-' . $to ) {
+		if ( empty( $status_label ) || 'wc-' . $to === $status_label ) {
 			$status_label = $to;
 		}
-		$title = sprintf( __( 'Order #%1$d: %2$s', 'forwp-notifications' ), $order_id, $status_label );
+		$title = sprintf(
+			/* translators: 1: order ID, 2: order status label */
+			__( 'Order #%1$d: %2$s', '4wp-notifications' ),
+			$order_id,
+			$status_label
+		);
 		ForWP_Notifications_Queue::push(
 			$user_id,
 			'order_status_changed',
@@ -93,7 +109,11 @@ class ForWP_Notifications_Woo_Adapter {
 				'message' => '',
 				'url'     => $view_url,
 				'actions' => array(
-					array( 'type' => 'view', 'label' => __( 'View order', 'forwp-notifications' ), 'url' => $view_url ),
+					array(
+						'type'  => 'view',
+						'label' => __( 'View order', '4wp-notifications' ),
+						'url'   => $view_url,
+					),
 				),
 			),
 			$order_id

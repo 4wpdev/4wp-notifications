@@ -46,8 +46,8 @@ class ForWP_Notifications_Manager {
 	 * Get notifications for current or given user.
 	 *
 	 * @param int|null $user_id User ID or null for current.
-	 * @param int     $limit   Limit.
-	 * @param int     $offset  Offset.
+	 * @param int      $limit   Limit.
+	 * @param int      $offset  Offset.
 	 * @return array
 	 */
 	public function get_for_user( $user_id = null, $limit = 50, $offset = 0 ) {
@@ -75,7 +75,7 @@ class ForWP_Notifications_Manager {
 	/**
 	 * Mark one as read.
 	 *
-	 * @param int     $id     Notification ID.
+	 * @param int      $id     Notification ID.
 	 * @param int|null $user_id User ID or null for current.
 	 * @return bool
 	 */
@@ -90,7 +90,7 @@ class ForWP_Notifications_Manager {
 	/**
 	 * Mark one as unread.
 	 *
-	 * @param int     $id     Notification ID.
+	 * @param int      $id     Notification ID.
 	 * @param int|null $user_id User ID or null for current.
 	 * @return bool
 	 */

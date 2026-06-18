@@ -19,7 +19,9 @@ class ForWP_Notifications_Installer {
 	public static function maybe_install() {
 		global $wpdb;
 		$table = $wpdb->prefix . self::TABLE_NAME;
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '" . $wpdb->esc_like( $table ) . "'" ) !== $table ) {
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
+		if ( $found !== $table ) {
 			self::install();
 		}
 	}
@@ -58,7 +60,9 @@ class ForWP_Notifications_Installer {
 	public static function uninstall() {
 		global $wpdb;
 		$table = $wpdb->prefix . self::TABLE_NAME;
-		$wpdb->query( "DROP TABLE IF EXISTS {$table}" );
+		$sql = $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $table );
+
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared -- Uninstall DDL; $sql from prepare() above.
 		delete_option( '4wp_notifications_db_version' );
 	}
 }
