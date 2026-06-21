@@ -16,7 +16,7 @@ $forwp_notif_rest_send_url = rest_url( ForWP_Notifications_REST_Controller::NAME
 	<ol class="forwp-notifications-admin-list forwp-notifications-admin-list--ordered">
 		<li><?php esc_html_e( 'Display → choose the page that shows the full list.', '4wp-notifications' ); ?></li>
 		<li><?php esc_html_e( 'Add Notifications List block to that page (or shortcode).', '4wp-notifications' ); ?></li>
-		<li><?php esc_html_e( 'Add Notifications Bell block to your header template or Navigation block.', '4wp-notifications' ); ?></li>
+		<li><?php esc_html_e( 'Add the Notifications Bell block to your header row, template part, or Navigation block.', '4wp-notifications' ); ?></li>
 		<li><?php esc_html_e( 'Direct notifications → send a test message.', '4wp-notifications' ); ?></li>
 		<li><?php esc_html_e( 'Notification types → enable WooCommerce events when needed.', '4wp-notifications' ); ?></li>
 	</ol>

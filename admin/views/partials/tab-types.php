@@ -50,6 +50,27 @@ $forwp_notif_woo_active = ForWP_Notifications_Plugin_Settings::is_woocommerce_ac
 			<?php endif; ?>
 		</div>
 
+		<div class="forwp-notifications-source-card is-live">
+			<div class="forwp-notifications-source-card__head">
+				<div>
+					<h3 class="forwp-notifications-source-card__title"><?php esc_html_e( 'Favorites', '4wp-notifications' ); ?></h3>
+					<p class="forwp-notifications-source-card__slug"><code>favorites</code></p>
+				</div>
+				<span class="forwp-notifications-badge forwp-notifications-badge--live"><?php esc_html_e( 'Live', '4wp-notifications' ); ?></span>
+			</div>
+			<p class="forwp-notifications-source-card__desc"><?php esc_html_e( 'Notify users when they follow a CPT, category, or saved post and matching content is published or updated.', '4wp-notifications' ); ?></p>
+			<fieldset class="forwp-notifications-toggle-list">
+				<label class="forwp-notifications-toggle-row">
+					<input type="checkbox" name="fav_new_post" value="1" <?php checked( ForWP_Notifications_Plugin_Settings::is_favorites_new_post_enabled() ); ?> />
+					<span><?php esc_html_e( 'New post in followed CPT or category', '4wp-notifications' ); ?></span>
+				</label>
+				<label class="forwp-notifications-toggle-row">
+					<input type="checkbox" name="fav_post_updated" value="1" <?php checked( ForWP_Notifications_Plugin_Settings::is_favorites_post_updated_enabled() ); ?> />
+					<span><?php esc_html_e( 'Followed post updated', '4wp-notifications' ); ?></span>
+				</label>
+			</fieldset>
+		</div>
+
 		<div class="forwp-notifications-source-card is-planned">
 			<div class="forwp-notifications-source-card__head">
 				<div>
@@ -60,22 +81,9 @@ $forwp_notif_woo_active = ForWP_Notifications_Plugin_Settings::is_woocommerce_ac
 			</div>
 			<p class="forwp-notifications-source-card__desc"><?php esc_html_e( 'Course enrollment, progress, and assignment alerts.', '4wp-notifications' ); ?></p>
 		</div>
-
-		<div class="forwp-notifications-source-card is-planned">
-			<div class="forwp-notifications-source-card__head">
-				<div>
-					<h3 class="forwp-notifications-source-card__title"><?php esc_html_e( 'Favorites', '4wp-notifications' ); ?></h3>
-					<p class="forwp-notifications-source-card__slug"><code>favorites</code></p>
-				</div>
-				<span class="forwp-notifications-badge forwp-notifications-badge--planned"><?php esc_html_e( 'Planned', '4wp-notifications' ); ?></span>
-			</div>
-			<p class="forwp-notifications-source-card__desc"><?php esc_html_e( 'Separate block for saved categories and tags — not part of the bell feed.', '4wp-notifications' ); ?></p>
-		</div>
 	</div>
 
-	<?php if ( $forwp_notif_woo_active ) : ?>
-		<p class="forwp-notifications-form-actions">
-			<button type="submit" class="button button-primary"><?php esc_html_e( 'Save notification types', '4wp-notifications' ); ?></button>
-		</p>
-	<?php endif; ?>
+	<p class="forwp-notifications-form-actions">
+		<button type="submit" class="button button-primary"><?php esc_html_e( 'Save notification types', '4wp-notifications' ); ?></button>
+	</p>
 </form>

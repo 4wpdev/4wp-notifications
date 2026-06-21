@@ -135,10 +135,16 @@ class ForWP_Notifications_Admin {
 		}
 
 		ForWP_Notifications_Plugin_Settings::set_page_id( isset( $_POST['page_id'] ) ? (int) $_POST['page_id'] : 0 );
+		ForWP_Notifications_Plugin_Settings::set_favorites_page_id( isset( $_POST['favorites_page_id'] ) ? (int) $_POST['favorites_page_id'] : 0 );
 
 		$page_id = ForWP_Notifications_Plugin_Settings::get_page_id();
 		if ( $page_id > 0 ) {
 			ForWP_Notifications_Page_Display::ensure_page_has_list_block( $page_id );
+		}
+
+		$favorites_page_id = ForWP_Notifications_Plugin_Settings::get_favorites_page_id();
+		if ( $favorites_page_id > 0 ) {
+			ForWP_Favorites_Page_Display::ensure_page_has_list_block( $favorites_page_id );
 		}
 
 		wp_safe_redirect(
@@ -163,6 +169,9 @@ class ForWP_Notifications_Admin {
 			ForWP_Notifications_Plugin_Settings::set_woo_order_created_enabled( ! empty( $_POST['woo_order_created'] ) );
 			ForWP_Notifications_Plugin_Settings::set_woo_status_changed_enabled( ! empty( $_POST['woo_status_changed'] ) );
 		}
+
+		ForWP_Notifications_Plugin_Settings::set_favorites_new_post_enabled( ! empty( $_POST['fav_new_post'] ) );
+		ForWP_Notifications_Plugin_Settings::set_favorites_post_updated_enabled( ! empty( $_POST['fav_post_updated'] ) );
 
 		wp_safe_redirect(
 			add_query_arg(

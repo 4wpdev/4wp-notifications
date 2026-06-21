@@ -1,0 +1,226 @@
+/* 4wp-notifications: favorites menu widget. Own BEM (.forwp-favorites-menu). */
+
+.forwp-favorites-menu {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+}
+
+.forwp-favorites-menu__button {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	border-radius: 8px;
+	padding: 0;
+	transition: background 0.2s ease;
+	z-index: 1;
+	color: inherit;
+	box-shadow: none;
+	outline: none;
+}
+
+.forwp-favorites-menu__button:focus {
+	outline: none;
+}
+
+.forwp-favorites-menu__button:focus-visible {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+}
+
+.forwp-favorites-menu__button:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.forwp-favorites-menu__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.forwp-favorites-menu__badge {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	background: #d63638;
+	color: #fff;
+	border-radius: 9px;
+	font-size: 10px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+}
+
+.forwp-favorites-menu__dropdown {
+	position: absolute;
+	top: calc(100% + 8px);
+	right: 0;
+	left: auto;
+	width: 360px;
+	max-width: calc(100vw - 32px);
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-8px);
+	transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+	z-index: 10000;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.forwp-favorites-menu__dropdown--active {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+.forwp-favorites-menu__dropdown-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px 20px;
+	border-bottom: 1px solid #e5e7eb;
+	background: #f9fafb;
+}
+
+.forwp-favorites-menu__dropdown-title {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.forwp-favorites-menu__list {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.forwp-favorites-menu__list-empty {
+	padding: 32px 20px;
+	text-align: center;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.forwp-favorites-menu__list-empty p {
+	margin: 0;
+}
+
+.forwp-favorites-menu__item {
+	display: flex;
+	gap: 12px;
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #374151;
+	border-bottom: 1px solid #f3f4f6;
+	transition: background 0.2s ease;
+}
+
+.forwp-favorites-menu__item:hover {
+	background: #f3f4f6;
+}
+
+.forwp-favorites-menu__item-icon {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fce7f3;
+	border-radius: 8px;
+	color: #be185d;
+}
+
+.forwp-favorites-menu__item-content {
+	flex: 1;
+	min-width: 0;
+}
+
+.forwp-favorites-menu__item-title {
+	margin: 0 0 4px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #1f2937;
+}
+
+.forwp-favorites-menu__item-text {
+	margin: 0 0 4px 0;
+	font-size: 13px;
+	color: #6b7280;
+	line-height: 1.4;
+}
+
+.forwp-favorites-menu__item-time {
+	font-size: 12px;
+	color: #9ca3af;
+}
+
+.forwp-favorites-menu__item-link-icon {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 6px;
+	vertical-align: middle;
+	color: #6b7280;
+}
+
+.forwp-favorites-menu__item-link-icon .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+.forwp-favorites-menu__footer {
+	padding: 12px 20px;
+	border-top: 1px solid #e5e7eb;
+	background: #fff;
+}
+
+.forwp-favorites-menu__footer a {
+	color: #2563eb;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+.forwp-favorites-menu__footer a:hover {
+	text-decoration: underline;
+}
+
+.forwp-favorites-menu--editor,
+.forwp-favorites-menu__button--editor {
+	padding: 0.75rem 1rem;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #646970;
+}
+
+.forwp-header-actions .forwp-favorites-menu__button,
+.forwp-header-actions .forwp-favorite-button {
+	border: none;
+	box-shadow: none;
+	outline: none;
+	background: transparent;
+}
+
+.forwp-header-actions .forwp-favorites-menu--guest .forwp-favorites-menu__button:hover,
+.forwp-header-actions .forwp-favorites-menu__button:hover,
+.forwp-header-actions .forwp-favorite-button:hover {
+	background: rgba(0, 0, 0, 0.05);
+}

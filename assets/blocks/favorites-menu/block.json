@@ -1,17 +1,17 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "forwp/notifications-bell",
-	"title": "4WP Notifications Bell",
+	"name": "forwp/favorites-menu",
+	"title": "4WP Favorites Menu",
 	"category": "widgets",
-	"description": "Bell icon with a dropdown of recent notifications. Use in header, rows, sidebars, or inside Navigation.",
+	"description": "Heart icon with a dropdown of recent favorites. Use in header, rows, sidebars, or inside Navigation.",
 	"textdomain": "4wp-notifications",
-	"icon": "bell",
-	"keywords": [ "4wp", "4wp-notifications", "notifications", "bell", "menu", "navigation", "header", "alert", "inbox" ],
+	"icon": "heart",
+	"keywords": [ "4wp", "favorites", "heart", "menu", "navigation", "header", "saved" ],
 	"attributes": {
 		"limit": {
 			"type": "number",
-			"default": 20
+			"default": 5
 		},
 		"allUrl": {
 			"type": "string",
@@ -26,11 +26,10 @@
 		"inserter": true
 	},
 	"editorScript": "file:./editor.js",
-	"editorStyle": "file:./editor.css",
-	"style": "file:../../css/bell-widget.css",
+	"style": "file:../../css/favorites-menu.css",
 	"example": {
 		"attributes": {
-			"limit": 10
+			"limit": 5
 		}
 	}
 }

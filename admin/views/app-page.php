@@ -21,7 +21,8 @@ $forwp_notif_saved       = isset( $_GET['saved'] ) && '1' === $_GET['saved'];
 $forwp_notif_sent        = isset( $_GET['sent'] ) ? (int) $_GET['sent'] : 0;
 $forwp_notif_types_saved = isset( $_GET['types_saved'] ) && '1' === $_GET['types_saved'];
 $forwp_notif_error       = isset( $_GET['error'] ) && '1' === $_GET['error'];
-$forwp_notif_page_id     = ForWP_Notifications_Plugin_Settings::get_page_id();
+$forwp_notif_page_id           = ForWP_Notifications_Plugin_Settings::get_page_id();
+$forwp_notif_favorites_page_id = ForWP_Notifications_Plugin_Settings::get_favorites_page_id();
 
 // phpcs:enable WordPress.Security.NonceVerification.Recommended
 

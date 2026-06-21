@@ -12,8 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ForWP_Notifications_Plugin_Settings {
 
 	const OPTION_PAGE_ID           = 'forwp_notifications_page_id';
+	const OPTION_FAVORITES_PAGE_ID = 'forwp_favorites_page_id';
 	const OPTION_WOO_ORDER_CREATED = 'forwp_notifications_woo_order_created';
 	const OPTION_WOO_STATUS        = 'forwp_notifications_woo_status_changed';
+	const OPTION_FAV_NEW_POST      = 'forwp_notifications_fav_new_post';
+	const OPTION_FAV_POST_UPDATED  = 'forwp_notifications_fav_post_updated';
 
 	/**
 	 * @return int
@@ -27,6 +30,32 @@ class ForWP_Notifications_Plugin_Settings {
 	 */
 	public static function set_page_id( $page_id ) {
 		update_option( self::OPTION_PAGE_ID, max( 0, (int) $page_id ) );
+	}
+
+	/**
+	 * @return int
+	 */
+	public static function get_favorites_page_id() {
+		return (int) get_option( self::OPTION_FAVORITES_PAGE_ID, 0 );
+	}
+
+	/**
+	 * @param int $page_id Page ID.
+	 */
+	public static function set_favorites_page_id( $page_id ) {
+		update_option( self::OPTION_FAVORITES_PAGE_ID, max( 0, (int) $page_id ) );
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function get_favorites_page_url() {
+		$page_id = self::get_favorites_page_id();
+		if ( $page_id <= 0 ) {
+			return '';
+		}
+		$url = get_permalink( $page_id );
+		return $url ? $url : '';
 	}
 
 	/**
@@ -67,6 +96,34 @@ class ForWP_Notifications_Plugin_Settings {
 	 */
 	public static function set_woo_status_changed_enabled( $enabled ) {
 		update_option( self::OPTION_WOO_STATUS, $enabled ? 1 : 0 );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function is_favorites_new_post_enabled() {
+		return (bool) get_option( self::OPTION_FAV_NEW_POST, true );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function is_favorites_post_updated_enabled() {
+		return (bool) get_option( self::OPTION_FAV_POST_UPDATED, true );
+	}
+
+	/**
+	 * @param bool $enabled Enabled state.
+	 */
+	public static function set_favorites_new_post_enabled( $enabled ) {
+		update_option( self::OPTION_FAV_NEW_POST, $enabled ? 1 : 0 );
+	}
+
+	/**
+	 * @param bool $enabled Enabled state.
+	 */
+	public static function set_favorites_post_updated_enabled( $enabled ) {
+		update_option( self::OPTION_FAV_POST_UPDATED, $enabled ? 1 : 0 );
 	}
 
 	/**

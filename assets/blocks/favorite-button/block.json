@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "forwp/favorite-button",
+	"title": "4WP Favorite Button",
+	"category": "widgets",
+	"description": "Heart button to follow a post, CPT archive, or taxonomy term and receive notifications.",
+	"textdomain": "4wp-notifications",
+	"icon": "heart",
+	"keywords": [ "4wp", "favorites", "heart", "subscribe", "notifications" ],
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"attributes": {
+		"targetMode": {
+			"type": "string",
+			"default": "auto"
+		},
+		"postId": {
+			"type": "number",
+			"default": 0
+		},
+		"postTypeSlug": {
+			"type": "string",
+			"default": ""
+		},
+		"termId": {
+			"type": "number",
+			"default": 0
+		},
+		"taxonomy": {
+			"type": "string",
+			"default": ""
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": false
+		},
+		"labelAdd": {
+			"type": "string",
+			"default": ""
+		},
+		"labelRemove": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"multiple": true,
+		"inserter": true
+	},
+	"editorScript": "file:./editor.js",
+	"style": "file:../../css/favorites.css"
+}

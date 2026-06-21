@@ -1,6 +1,6 @@
 <?php
 /**
- * Block forwp/notifications-bell — bell widget for headers and navigation.
+ * Block forwp/favorites-menu — favorites dropdown for headers and navigation.
  *
  * @package ForWP_Notifications
  */
@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class ForWP_Notifications_Bell_Block {
+class ForWP_Favorites_Menu_Block {
 
-	const BLOCK_NAME = 'forwp/notifications-bell';
+	const BLOCK_NAME = 'forwp/favorites-menu';
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_block' ) );
@@ -43,7 +43,7 @@ class ForWP_Notifications_Bell_Block {
 	}
 
 	/**
-	 * Keep bell usable inside core/navigation menus.
+	 * Keep menu widget usable inside core/navigation menus.
 	 *
 	 * @param string[] $blocks Blocks that need a list-item wrapper in navigation.
 	 * @return string[]
@@ -58,7 +58,7 @@ class ForWP_Notifications_Bell_Block {
 
 	public function register_block() {
 		register_block_type(
-			FORWP_NOTIFICATIONS_PLUGIN_DIR . 'assets/blocks/notifications-bell',
+			FORWP_NOTIFICATIONS_PLUGIN_DIR . 'assets/blocks/favorites-menu',
 			array(
 				'render_callback' => array( $this, 'render' ),
 			)
@@ -70,10 +70,10 @@ class ForWP_Notifications_Bell_Block {
 	 * @return string
 	 */
 	public function render( $attributes ) {
-		return ForWP_Notifications_Bell_Renderer::render(
+		return ForWP_Favorites_Menu_Renderer::render(
 			array(
 				'all_url' => isset( $attributes['allUrl'] ) ? (string) $attributes['allUrl'] : '',
-				'limit'   => isset( $attributes['limit'] ) ? (int) $attributes['limit'] : 20,
+				'limit'   => isset( $attributes['limit'] ) ? (int) $attributes['limit'] : 5,
 			)
 		);
 	}

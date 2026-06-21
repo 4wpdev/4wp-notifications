@@ -7,7 +7,7 @@
 	"description": "Display the full in-app notifications list for the logged-in user.",
 	"textdomain": "4wp-notifications",
 	"icon": "list-view",
-	"keywords": [ "4wp", "notifications", "inbox", "alerts", "bell" ],
+	"keywords": [ "4wp", "4wp-notifications", "notifications", "inbox", "alerts", "bell", "list" ],
 	"attributes": {
 		"limit": {
 			"type": "number",

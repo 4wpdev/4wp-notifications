@@ -1,0 +1,119 @@
+.forwp-favorites {
+	max-width: 48rem;
+}
+
+.forwp-favorites__empty {
+	margin: 0;
+	color: #646970;
+}
+
+.forwp-favorites__group + .forwp-favorites__group {
+	margin-top: 2rem;
+}
+
+.forwp-favorites__group-title {
+	margin: 0 0 0.75rem;
+	font-size: 1.125rem;
+}
+
+.forwp-favorites__items {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.forwp-favorites__item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.forwp-favorites__item-main {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	min-width: 0;
+}
+
+.forwp-favorites__item-link,
+.forwp-favorites__item-title {
+	font-weight: 600;
+	text-decoration: none;
+	color: inherit;
+}
+
+.forwp-favorites__item-link:hover {
+	text-decoration: underline;
+}
+
+.forwp-favorites__item-subtitle {
+	font-size: 0.875rem;
+	color: #646970;
+}
+
+.forwp-favorites__remove {
+	flex: 0 0 auto;
+	border: 0;
+	background: transparent;
+	color: #646970;
+	font-size: 1.25rem;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0.25rem 0.5rem;
+}
+
+.forwp-favorites__remove:hover {
+	color: #b32d2e;
+}
+
+.forwp-favorite-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	border: none;
+	background: transparent;
+	color: inherit;
+	border-radius: 8px;
+	padding: 0.35rem;
+	cursor: pointer;
+	line-height: 1.2;
+}
+
+.forwp-favorite-button:focus {
+	outline: none;
+}
+
+.forwp-favorite-button:focus-visible {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+}
+
+.forwp-favorite-button__icon {
+	display: inline-flex;
+}
+
+.forwp-favorite-button.is-active {
+	color: #d63638;
+}
+
+.forwp-favorite-button.is-active .forwp-favorite-button__icon svg {
+	fill: currentColor;
+}
+
+.forwp-favorite-button--placeholder,
+.forwp-favorite-button--editor {
+	padding: 0.75rem 1rem;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #646970;
+}
+
+.forwp-favorites-list--editor {
+	padding: 1rem;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #646970;
+}

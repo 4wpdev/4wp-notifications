@@ -3,7 +3,7 @@
  * Plugin Name:       4WP Notifications
  * Plugin URI:        https://github.com/4wpdev/4wp-notifications
  * Description:       In-app notifications for logged-in users — bell block, inbox list, WooCommerce alerts, and admin broadcasts.
- * Version:           1.2.0
+ * Version:           1.3.2
  * Requires at least: 6.4
  * Tested up to:      7.0
  * Requires PHP:      7.4
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FORWP_NOTIFICATIONS_VERSION', '1.2.0' );
+define( 'FORWP_NOTIFICATIONS_VERSION', '1.3.2' );
 define( 'FORWP_NOTIFICATIONS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'FORWP_NOTIFICATIONS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'FORWP_NOTIFICATIONS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -42,6 +42,20 @@ require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/class-list-renderer.php'
 require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/class-page-display.php';
 require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/class-block.php';
 require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/class-bell-block.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-repository.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-manager.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-notifier.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-auth.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-list-renderer.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-button-renderer.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-menu-renderer.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-rest-controller.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-list-block.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-button-block.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-menu-block.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-page-display.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/favorites/class-favorites-shortcode.php';
+require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'includes/class-notifications-account-bridge.php';
 require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'rest/class-rest-controller.php';
 
 register_activation_hook( __FILE__, array( 'ForWP_Notifications_Installer', 'install' ) );
@@ -64,6 +78,7 @@ function forwp_notifications_init() {
 
 	ForWP_Notifications_Installer::maybe_install();
 	ForWP_Notifications_REST_Controller::register();
+	ForWP_Favorites_REST_Controller::register();
 	new ForWP_Notifications_Event_Dispatcher();
 	new ForWP_Notifications_Worker();
 	new ForWP_Notifications_Shortcode();
@@ -71,6 +86,13 @@ function forwp_notifications_init() {
 	new ForWP_Notifications_Page_Display();
 	new ForWP_Notifications_Block();
 	new ForWP_Notifications_Bell_Block();
+	new ForWP_Favorites_Notifier();
+	new ForWP_Favorites_Page_Display();
+	new ForWP_Favorites_Shortcode();
+	new ForWP_Favorites_List_Block();
+	new ForWP_Favorites_Button_Block();
+	new ForWP_Favorites_Menu_Block();
+	new ForWP_Notifications_Account_Bridge();
 
 	if ( is_admin() ) {
 		require_once FORWP_NOTIFICATIONS_PLUGIN_DIR . 'admin/class-admin.php';
