@@ -107,7 +107,23 @@
 	text-decoration: none;
 }
 
+.forwp-notifications-bell__delete-all {
+	background: none;
+	border: none;
+	color: #df3434;
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: none;
+}
+
 .forwp-notifications-bell__mark-all:hover {
+	text-decoration: underline;
+}
+
+.forwp-notifications-bell__delete-all:hover {
+	background-color: transparent;
 	text-decoration: underline;
 }
 
@@ -231,6 +247,9 @@
 }
 
 .forwp-notifications-bell__footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 12px 20px;
 	border-top: 1px solid #e5e7eb;
 	background: #fff;

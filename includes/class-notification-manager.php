@@ -115,4 +115,33 @@ class ForWP_Notifications_Manager {
 		}
 		return $this->repository->mark_all_read( $user_id );
 	}
+
+	/**
+	 * Delete a notification.
+	 *
+	 * @param int      $id     Notification ID.
+	 * @param int|null $user_id User ID or null for current.
+	 * @return bool
+	 */
+	public function delete( $id, $user_id = null ) {
+		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return false;
+		}
+		return $this->repository->delete( (int) $id, $user_id );
+	}
+
+	/**
+	 * Deletes all notifications.
+	 *
+	 * @param int|null $user_id User ID or null for current.
+	 * @return bool
+	 */
+	public function delete_all( $user_id = null ) {
+		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return false;
+		}
+		return $this->repository->delete_all( $user_id );
+	}
 }

@@ -67,6 +67,10 @@ class ForWP_Notifications_List_Renderer {
 		?>
 		<div class="forwp-notifications" data-forwp-poll="1" data-forwp-rest-url="<?php echo esc_url( $rest_url ); ?>" data-forwp-nonce="<?php echo esc_attr( $nonce ); ?>" data-forwp-poll-interval="<?php echo esc_attr( (string) $poll_interval ); ?>" data-forwp-empty-text="<?php echo esc_attr( $empty_text ); ?>">
 			<?php if ( ! empty( $items ) ) : ?>
+				<div class="forwp-button-group">
+					<button type="button" class="forwp-notifications-bell__mark-all forwp-button-full"><?php esc_html_e( 'Mark all as read', '4wp-notifications' ); ?></button>
+					<button type="button" class="forwp-notifications-bell__delete-all forwp-button-full"><?php esc_html_e( 'Delete All', '4wp-notifications' ); ?></button>
+				</div>
 				<ul class="forwp-notifications__list">
 					<?php
 					foreach ( $items as $item ) {
@@ -92,6 +96,9 @@ class ForWP_Notifications_List_Renderer {
 		$toggle_label    = $is_read ? __( 'Mark as unread', 'forwp-notifications' ) : __( 'Mark as read', 'forwp-notifications' );
 		$toggle_icon     = $is_read ? 'dashicons-hidden' : 'dashicons-visibility';
 		$toggle_class    = 'forwp-notifications__toggle' . ( $is_read ? ' forwp-notifications__toggle--read' : '' );
+		$delete_class    = 'forwp-notifications__delete';
+		$delete_label	 =  __( 'Delete', 'forwp-notifications' );
+		$delete_icon	 =  'dashicons-trash';
 		?>
 		<li class="forwp-notifications__item <?php echo $is_read ? 'is-read' : ''; ?>" data-id="<?php echo esc_attr( (string) $item['id'] ); ?>">
 			<span class="forwp-notifications__item-icon" aria-hidden="true"><span class="dashicons <?php echo esc_attr( $item_icon_class ); ?>"></span></span>
@@ -108,6 +115,7 @@ class ForWP_Notifications_List_Renderer {
 				<?php endif; ?>
 			</div>
 			<button type="button" class="<?php echo esc_attr( $toggle_class ); ?> forwp-js-toggle" data-id="<?php echo esc_attr( (string) $item['id'] ); ?>" data-is-read="<?php echo $is_read ? '1' : '0'; ?>" aria-label="<?php echo esc_attr( $toggle_label ); ?>"><span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span></button>
+			<button type="button" class="<?php echo esc_attr( $delete_class ); ?> forwp-js-toggle" data-id="<?php echo esc_attr( (string) $item['id'] ); ?>" aria-label="<?php echo esc_attr( $delete_label ); ?>"><span class="dashicons <?php echo esc_attr( $delete_icon ); ?>" aria-hidden="true"></span></button>
 		</li>
 		<?php
 	}

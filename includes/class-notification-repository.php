@@ -155,4 +155,31 @@ class ForWP_Notifications_Repository {
 			array( '%d' )
 		);
 	}
+
+	/**
+	 * Removes the current notification.
+	 * 
+	 * @param int $user_id User ID.
+	 * @return int|false Number of rows updated or false.
+	 */
+	public function delete ( $id, $user_id ) {
+		return (bool) $this->wpdb->delete(
+			$this->table,
+			array( 'id' => (int) $id, 'user_id' => (int) $user_id ),
+			array( '%d', '%d' )
+		);
+	}
+
+	/**
+	 * Removes all notifications by user.
+	 * 
+	 * @return int|false Number of rows updated or false.
+	 */
+	public function delete_all ( $user_id ) {
+		return (bool) $this->wpdb->delete(
+			$this->table,
+			array( 'user_id' => (int) $user_id ),
+			array( '%d' )
+		);
+	}
 }
