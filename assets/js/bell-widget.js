@@ -17,6 +17,7 @@
 	var ITEM_CLASS = 'forwp-notifications-bell__item';
 	var BADGE_SEL = '.forwp-notifications-bell__badge';
 	var MARK_ALL_SEL = '.forwp-notifications-bell__mark-all';
+	var DELETE_ALL_SEL = '.forwp-notifications-bell__delete-all';
 	var DROPDOWN_ACTIVE_CLASS = 'forwp-notifications-bell__dropdown--active';
 	var POLL_INTERVAL_MS = 30000;
 
@@ -196,6 +197,29 @@
 		});
 	}
 
+	function bindDeleteAll(wrapper, restUrl, nonce) {
+		var dropdown = wrapper.querySelector('.forwp-notifications-bell__dropdown');
+		if (!dropdown) return;
+		var btn = dropdown.querySelector(DELETE_ALL_SEL);
+		if (!btn) return;
+		btn.addEventListener('click', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			fetch(restUrl + '/notifications/delete', {
+				method: 'DELETE',
+				credentials: 'same-origin',
+				headers: { 'X-WP-Nonce': nonce }
+			}).then(function (res) {
+				if (res.ok) {
+					fetchNotifications(wrapper, restUrl, nonce, function () {
+						bindItemToggles(wrapper, restUrl, nonce);
+					});
+					document.dispatchEvent(new CustomEvent('forwp-notifications-updated'));
+				}
+			});
+		});
+	}
+
 	function bindItemToggles(wrapper, restUrl, nonce) {
 		var listEl = wrapper.querySelector(LIST_SEL);
 		if (!listEl) return;
@@ -252,6 +276,7 @@
 		if (!restUrl || !nonce) return;
 		bindDropdownToggle(wrapper, restUrl, nonce);
 		bindMarkAllRead(wrapper, restUrl, nonce);
+		bindDeleteAll(wrapper, restUrl, nonce);
 		bindItemToggles(wrapper, restUrl, nonce);
 		fetchNotifications(wrapper, restUrl, nonce, function () {
 			bindItemToggles(wrapper, restUrl, nonce);

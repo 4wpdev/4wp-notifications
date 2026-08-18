@@ -1,57 +1,58 @@
-.4wp-notifications__list {
+.forwp-notifications__list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.4wp-notifications__item {
+.forwp-notifications__item {
 	display: flex;
 	align-items: flex-start;
 	gap: 0.75rem;
 	border-bottom: 1px solid #e0e0e0;
 	padding: 0.75rem 0;
 }
-.4wp-notifications__item .4wp-notifications__content {
+.forwp-notifications__item .forwp-notifications__content {
 	flex: 1;
 	min-width: 0;
 }
-.4wp-notifications__item-icon {
+.forwp-notifications__item-icon {
 	flex-shrink: 0;
 	display: flex;
 	align-items: flex-start;
 	color: #6b7280;
 }
-.4wp-notifications__item-icon .dashicons {
+.forwp-notifications__item-icon .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 }
-.4wp-notifications__item.is-read {
+.forwp-notifications__item.is-read {
 	opacity: 0.7;
 }
-.4wp-notifications__title {
+.forwp-notifications__title {
 	display: block;
 	font-weight: 600;
 }
-.4wp-notifications__message {
+.forwp-notifications__message {
 	margin: 0.25rem 0;
 }
-.4wp-notifications__date {
+.forwp-notifications__date {
 	font-size: 0.875em;
 	color: #666;
 }
-.4wp-notifications__link {
+.forwp-notifications__link {
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	margin-right: 0.5rem;
 }
-.4wp-notifications__link-icon.dashicons {
+.forwp-notifications__link-icon.dashicons {
 	font-size: 16px;
 	width: 16px;
 	height: 16px;
 }
 
-.4wp-notifications__toggle {
+.forwp-notifications__toggle,
+.forwp-notifications__delete {
 	flex-shrink: 0;
 	width: 36px;
 	height: 36px;
@@ -66,21 +67,77 @@
 	padding: 0;
 	transition: color 0.2s ease, background 0.2s ease;
 }
-.4wp-notifications__toggle:hover {
+.forwp-notifications__toggle:hover {
 	color: #2563eb;
 	background: #eff6ff;
 }
-.4wp-notifications__toggle .dashicons {
+.forwp-notifications__delete:hover {
+	color: #df3434;
+	background: #eff6ff;
+}
+.forwp-notifications__toggle .dashicons,
+.forwp-notifications__delete .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 }
 
+.forwp-button-group {
+	display: flex;
+	justify-content: end;
+	margin-bottom: 20px;
+	gap: 20px;
+}
+
+.forwp-notifications-bell__delete-all.forwp-button-full {
+	border: 1px solid #df3434;
+	padding: 8px 15px;
+	border-radius: 10px;
+	transition: 250ms all;
+}
+
+.forwp-notifications-bell__delete-all.forwp-button-full:hover {
+	background-color: #df3434;
+	text-decoration: none;
+	color: #fff;
+}
+
+.forwp-notifications-bell__mark-all.forwp-button-full {
+	border: 1px solid #2563eb;
+	padding: 8px 15px;
+	border-radius: 10px;
+	transition: 250ms all;
+}
+
+.forwp-notifications-bell__mark-all.forwp-button-full:hover {
+	background-color: #2563eb;
+	text-decoration: none;
+	color: #fff;
+}
+
+.forwp-notifications__list.disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		opacity: .3;
+	}
+	50% {
+		opacity: .5;
+	}
+	100% {
+		opacity: .3;
+	}
+}
+
 /* Read state: closed eye, gray */
-.4wp-notifications__toggle--read,
-.4wp-notifications__toggle--read .dashicons {
+.forwp-notifications__toggle--read,
+.forwp-notifications__toggle--read .dashicons {
 	color: #9ca3af;
 }
-.4wp-notifications__toggle--read:hover {
+.forwp-notifications__toggle--read:hover {
 	color: #6b7280;
 }

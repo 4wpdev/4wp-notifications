@@ -140,6 +140,7 @@ class ForWP_Notifications_Bell_Renderer {
 					<div class="forwp-notifications-bell__list-empty" <?php echo ! empty( $items ) ? 'style="display: none;"' : ''; ?>><p><?php esc_html_e( 'No new notifications', '4wp-notifications' ); ?></p></div>
 				</div>
 				<div class="forwp-notifications-bell__footer">
+					<button type="button" class="forwp-notifications-bell__delete-all"><?php esc_html_e( 'Delete All', '4wp-notifications' ); ?></button>
 					<a href="<?php echo esc_url( $all_url ? $all_url : '#' ); ?>"><?php esc_html_e( 'View all notifications', '4wp-notifications' ); ?></a>
 				</div>
 			</div>

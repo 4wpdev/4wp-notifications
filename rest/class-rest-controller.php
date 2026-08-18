@@ -89,6 +89,19 @@ class ForWP_Notifications_REST_Controller {
 						),
 					),
 				),
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+					'args'                => array(
+						'id' => array(
+							'required'          => true,
+							'type'              => 'integer',
+							'validate_callback' => function ( $v ) {
+								return $v > 0; },
+						),
+					),
+				),
 			)
 		);
 		register_rest_route(
@@ -98,6 +111,17 @@ class ForWP_Notifications_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'mark_all_read' ),
+					'permission_callback' => array( $this, 'check_logged_in' ),
+				),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/notifications/delete',
+			array(
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete_all' ),
 					'permission_callback' => array( $this, 'check_logged_in' ),
 				),
 			)
@@ -263,6 +287,34 @@ class ForWP_Notifications_REST_Controller {
 			array(
 				'success' => true,
 				'updated' => $updated,
+			),
+			200
+		);
+	}
+
+	public function delete( WP_REST_Request $request ) {
+		$ok      = $this->manager->delete( $id, null );
+		if ( ! $ok ) {
+			return new WP_REST_Response( array( 'message' => __( 'Notification not found.', '4wp-notifications' ) ), 404 );
+		}
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+				'removed' => true,
+			),
+			200
+		);
+	}
+
+	public function delete_all( WP_REST_Request $request ) {
+		$ok      = $this->manager->delete_all();
+		if ( ! $ok ) {
+			return new WP_REST_Response( array( 'message' => __( 'No notifications to delete.', '4wp-notifications' ) ), 404 );
+		}
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+				'removed' => true,
 			),
 			200
 		);
