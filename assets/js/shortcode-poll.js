@@ -25,17 +25,17 @@
 		var isReadClass = isRead ? ' is-read' : '';
 		var toggleLabel = isRead ? 'Mark as unread' : 'Mark as read';
 		var toggleIcon = isRead ? 'dashicons-hidden' : 'dashicons-visibility';
-		var toggleReadClass = isRead ? ' 4wp-notifications__toggle--read' : '';
-		var linkHtml = url ? '<a class="4wp-notifications__link" href="' + escapeHtml(url) + '" aria-label="Go to page"><span class="4wp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span></a>' : '';
-		var toggleHtml = '<button type="button" class="4wp-notifications__toggle' + toggleReadClass + ' forwp-js-toggle" data-id="' + item.id + '" data-is-read="' + (isRead ? '1' : '0') + '" aria-label="' + escapeHtml(toggleLabel) + '"><span class="dashicons ' + toggleIcon + '" aria-hidden="true"></span></button>';
+		var toggleReadClass = isRead ? ' forwp-notifications__toggle--read' : '';
+		var linkHtml = url ? '<a class="forwp-notifications__link" href="' + escapeHtml(url) + '" aria-label="Go to page"><span class="forwp-notifications__link-icon dashicons dashicons-external" aria-hidden="true"></span></a>' : '';
+		var toggleHtml = '<button type="button" class="forwp-notifications__toggle' + toggleReadClass + ' forwp-js-toggle" data-id="' + item.id + '" data-is-read="' + (isRead ? '1' : '0') + '" aria-label="' + escapeHtml(toggleLabel) + '"><span class="dashicons ' + toggleIcon + '" aria-hidden="true"></span></button>';
 		var iconClass = getItemIconClass(source);
 		return (
-			'<li class="4wp-notifications__item' + isReadClass + '" data-id="' + item.id + '">' +
-			'<span class="4wp-notifications__item-icon" aria-hidden="true"><span class="dashicons ' + iconClass + '"></span></span>' +
-			'<div class="4wp-notifications__content">' +
-			(title ? '<span class="4wp-notifications__title">' + escapeHtml(title) + '</span>' : '') +
-			(message ? '<p class="4wp-notifications__message">' + escapeHtml(message) + '</p>' : '') +
-			'<span class="4wp-notifications__date">' + escapeHtml(date) + '</span>' +
+			'<li class="forwp-notifications__item' + isReadClass + '" data-id="' + item.id + '">' +
+			'<span class="forwp-notifications__item-icon" aria-hidden="true"><span class="dashicons ' + iconClass + '"></span></span>' +
+			'<div class="forwp-notifications__content">' +
+			(title ? '<span class="forwp-notifications__title">' + escapeHtml(title) + '</span>' : '') +
+			(message ? '<p class="forwp-notifications__message">' + escapeHtml(message) + '</p>' : '') +
+			'<span class="forwp-notifications__date">' + escapeHtml(date) + '</span>' +
 			linkHtml +
 			'</div>' + toggleHtml + '</li>'
 		);
@@ -51,9 +51,9 @@
 	function renderList(items, emptyText) {
 		if (!items || !items.length) {
 			var text = (emptyText && String(emptyText).trim()) || 'No notifications.';
-			return '<p class="4wp-notifications__empty">' + escapeHtml(text) + '</p>';
+			return '<p class="forwp-notifications__empty">' + escapeHtml(text) + '</p>';
 		}
-		var html = '<ul class="4wp-notifications__list">';
+		var html = '<ul class="forwp-notifications__list">';
 		for (var i = 0; i < items.length; i++) {
 			html += renderItem(items[i]);
 		}
@@ -99,7 +99,7 @@
 				if (!id) return;
 				var nextRead = !isRead;
 				var self = this;
-				var li = self.closest('.4wp-notifications__item');
+				var li = self.closest('.forwp-notifications__item');
 				fetch(restUrl + '/notifications/' + id, {
 					method: 'PATCH',
 					credentials: 'same-origin',
@@ -111,14 +111,14 @@
 							li.classList.add('is-read');
 							self.setAttribute('data-is-read', '1');
 							self.setAttribute('aria-label', 'Mark as unread');
-							self.classList.add('4wp-notifications__toggle--read');
+							self.classList.add('forwp-notifications__toggle--read');
 							var icon = self.querySelector('.dashicons');
 							if (icon) icon.className = 'dashicons dashicons-hidden';
 						} else {
 							li.classList.remove('is-read');
 							self.setAttribute('data-is-read', '0');
 							self.setAttribute('aria-label', 'Mark as read');
-							self.classList.remove('4wp-notifications__toggle--read');
+							self.classList.remove('forwp-notifications__toggle--read');
 							var icon = self.querySelector('.dashicons');
 							if (icon) icon.className = 'dashicons dashicons-visibility';
 						}
@@ -149,11 +149,11 @@
 	}
 
 	function init() {
-		document.querySelectorAll('.4wp-notifications[data-forwp-poll="1"]').forEach(poll);
+		document.querySelectorAll('.forwp-notifications[data-forwp-poll="1"]').forEach(poll);
 	}
 
 	document.addEventListener('forwp-notifications-updated', function () {
-		document.querySelectorAll('.4wp-notifications[data-forwp-poll="1"]').forEach(refetchPage);
+		document.querySelectorAll('.forwp-notifications[data-forwp-poll="1"]').forEach(refetchPage);
 	});
 
 	if (document.readyState === 'loading') {
